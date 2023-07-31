@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="312" max="-2" attributes="0"/>
               <EmptySpace pref="46" max="32767" attributes="0"/>
@@ -47,7 +47,7 @@
           <Font name="&#xd55c;&#xcef4; &#xace0;&#xb515;" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="&#xb098;&#xb294;&#xc57c; Youngcro"/>
+        <Property name="text" type="java.lang.String" value="&#xb098;&#xb294;&#xc57c; YoungCro"/>
       </Properties>
     </Component>
   </SubComponents>
