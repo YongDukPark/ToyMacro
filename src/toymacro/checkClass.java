@@ -20,8 +20,12 @@ public class checkClass {
             //우측 상단에 있는거
             //r.mouseMove(1110, 680);
             //우측 하단에 있는거
-            r.mouseMove(180, 410);
+            //r.mouseMove(1090, 800);
             
+            r.mouseMove(850, 680);
+            //r.mouseMove(1800, 830);
+            
+            //31
             
         } catch (Exception e) {
             System.err.println(e);

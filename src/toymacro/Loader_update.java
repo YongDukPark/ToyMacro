@@ -20,7 +20,7 @@ public class Loader_update {
             Robot r = new Robot();
             
             //반복횟수
-            int loopCount = 2;
+            int loopCount = 25;
             
             //상단에서 떨어진 정도
             int mouseKeyPoint = 390; 
@@ -36,6 +36,10 @@ public class Loader_update {
             //첫번? 펑션 위치
             int function2h = 630;
             int function2w = 680;
+            
+            //우측 세번째 펑션
+            int function3h = 1110;
+            int function3w = 680;
             
             //탭 다음으로 넘어가는 로직
             r.keyPress(18);
@@ -61,7 +65,7 @@ public class Loader_update {
                 r.delay(500);
                 
                 //펑션으로 이동
-                r.mouseMove(function1h, function1w);
+                r.mouseMove(function3h, function3w);
                 //더블클릭
                 r.delay(500);
                 r.mousePress(InputEvent.BUTTON1_MASK);
