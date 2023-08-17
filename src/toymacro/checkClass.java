@@ -13,8 +13,8 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 public class checkClass {
     public static void main(String[] args) {
@@ -61,9 +61,14 @@ public class checkClass {
                     int x = e.getX();
                     int y = e.getY();
                     System.out.println("Clicked at coordinates: (" + x + ", " + y + ")");
-                    frame.setVisible(false);
+                    //frame.setVisible(false);
+                    //frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                     
-                    //frame.setDefaultCloseOperation();
+                    //******종료하는 친구다.******
+                    //frame.dispose();
+                    
+                    
+                    System.out.println("testtest");
                 }
             });
             
