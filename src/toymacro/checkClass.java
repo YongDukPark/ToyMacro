@@ -23,27 +23,20 @@ public class checkClass {
         try {
             Robot r = new Robot();
             
-            //¿ìÃø »ó´Ü¿¡ ÀÖ´Â°Å
+            //ë¡œë´‡ ë§ˆìš°ìŠ¤ ì›€ì§ì´ê¸°
             //r.mouseMove(1110, 680);
-            //¿ìÃø ÇÏ´Ü¿¡ ÀÖ´Â°Å
+            //ë¡œë´‡ ë§ˆìš°ìŠ¤ ì›€ì§ì´ê¸°
             //r.mouseMove(1090, 800);
             
             r.mouseMove(1900, 680);
             //r.mouseMove(1800, 830);
             
             
-            //ÀüÃ¼ÇØ»óµµ ±¸ÇÏ±â
+            //ì „ì²´í•´ìƒë„ êµ¬í•˜ê¸° 
             Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
-            System.out.println("ÇØ»óµµ : " + res.width + " x " + res.height);  
+            System.out.println("??ì´ê±°ë­ëˆ„ : " + res.width + " x " + res.height);  
             
-            //Æ÷ÀÎÆ® ÁöÁ¡ ±¸ÇÏ±â
-//            PointerInfo pt = MouseInfo.getPointerInfo();
-//            while(true) {
-//                    pt = MouseInfo.getPointerInfo();
-//                    System.out.println(pt.getLocation()); // x,y 
-//                    System.out.println(pt.getLocation().x);// x ÁÂÇ¥
-//                    System.out.println(pt.getLocation().y); // y ÁÂÇ¥
-//            }
+            
             
             JFrame frame = new JFrame("Click Coordinates Example");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,8 +57,8 @@ public class checkClass {
                     //frame.setVisible(false);
                     //frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                     
-                    //******Á¾·áÇÏ´Â Ä£±¸´Ù.******
-                    //frame.dispose();
+                    //******ì¢…ë£Œí•˜ëŠ” ì¹œêµ¬ë‹¤.******
+                    frame.dispose();
                     
                     
                     System.out.println("testtest");
@@ -73,16 +66,16 @@ public class checkClass {
             });
             
             
-            
             frame.add(panel);
-            //ÀüÃ¼È­¸é
+            //ì „ì²´í™”ë©´
             frame.setSize(res.width, res.height);
-            //ÀüÃ¼È­¸éÀº ¾Æ´Ñµ¥ ±×·±´À³¦
+            //ì „ì²´í™”ë©´ì€ ì•„ë‹Œë° ê·¸ëŸ°ëŠë‚Œ
             frame.setUndecorated(true);
             frame.setBackground(new Color(0,0,0,122));
             panel.setBackground(new Color(0,0,0,122));
             frame.setVisible(true);
-
+            
+            
             } catch (Exception e) {
                 System.err.println(e);
             }
