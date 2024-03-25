@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toymacro;
+package toymacro2;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class F_5_changeOption {
+public class F_4_checkProcessFunctionOption {
     public static void main(String[] args) {
         //나는야 Loader Test를 정복하기위해 끄적여진 놈이다.
         //나는야 Loader Test를 정복하기위해 끄적여진 놈이다.
@@ -69,40 +69,17 @@ public class F_5_changeOption {
                 r.delay(500);
                 
                 //펑션으로 이동
-                r.mouseMove(920, 680);
+                r.mouseMove(850, 620);
+                
+                
+                r.delay(200);
+                //r.keyPress(18);
                 r.mousePress(InputEvent.BUTTON1_MASK);
+                //r.delay(500);
+                //r.mouseMove(1430, 880);
                 r.mouseRelease(InputEvent.BUTTON1_MASK);
+                r.delay(200);
                 
-                r.mouseMove(1800, 830);
-                r.mousePress(InputEvent.BUTTON1_MASK);
-                r.mouseRelease(InputEvent.BUTTON1_MASK);
-                
-                r.delay(500);
-                
-                r.keyPress(97); //우측화살표
-                r.keyRelease(97); //우측화살표
-                r.keyPress(97); //우측화살표
-                r.keyRelease(97); //우측화살표
-                r.delay(100);
-                r.keyPress(96); //우측화살표
-                r.keyRelease(96); //우측화살표
-                r.delay(100);
-                r.keyPress(96); //우측화살표
-                r.keyRelease(96); //우측화살표
-                r.delay(100);
-                r.keyPress(96); //우측화살표
-                r.keyRelease(96); //우측화살표
-                r.delay(100);
-                r.keyPress(96); //우측화살표
-                r.keyRelease(96); //우측화살표
-                r.delay(100);
-                r.keyPress(96); //우측화살표
-                r.keyRelease(96); //우측화살표
-                r.delay(300);
-                
-                
-                r.keyPress(27); //우측화살표
-                r.keyRelease(27); //우측화살표
                 
                 // 하단으로 20 이동
                 mouseKeyPoint = mouseKeyPoint + plusPoint;

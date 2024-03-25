@@ -1,4 +1,4 @@
-package toymacro;
+package toymacro2;
 
 import java.awt.Robot;
 

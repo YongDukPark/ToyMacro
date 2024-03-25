@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toymacro;
+package toymacro2;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;

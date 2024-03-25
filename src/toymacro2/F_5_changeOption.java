@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toymacro;
+package toymacro2;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class Loader_update2 {
+public class F_5_changeOption {
     public static void main(String[] args) {
         //나는야 Loader Test를 정복하기위해 끄적여진 놈이다.
         //나는야 Loader Test를 정복하기위해 끄적여진 놈이다.
@@ -69,48 +69,40 @@ public class Loader_update2 {
                 r.delay(500);
                 
                 //펑션으로 이동
-                r.mouseMove(function3h, function3w);
-                
-                //더블클릭
-                r.delay(500);
-                r.mousePress(InputEvent.BUTTON1_MASK);
-                r.mouseRelease(InputEvent.BUTTON1_MASK);
-                r.delay(300);
+                r.mouseMove(920, 680);
                 r.mousePress(InputEvent.BUTTON1_MASK);
                 r.mouseRelease(InputEvent.BUTTON1_MASK);
                 
-                /*-------------------------------------------------------*/
-                /*기능 구현*/
-                
-                //허공 클릭 및 스크롤 
-                r.delay(1000);
+                r.mouseMove(1800, 830);
                 r.mousePress(InputEvent.BUTTON1_MASK);
                 r.mouseRelease(InputEvent.BUTTON1_MASK);
-                r.delay(300);
-                r.mousePress(InputEvent.BUTTON1_MASK);
-                r.mouseRelease(InputEvent.BUTTON1_MASK);
-                r.delay(300);
-                r.mousePress(InputEvent.BUTTON1_MASK);
-                r.mouseRelease(InputEvent.BUTTON1_MASK);
-                r.delay(1000);
-                
-                // 지우는
-                r.keyPress(8);
-                r.delay(500);
-                r.keyPress(8);
-                
-                /*기능 구현*/
-                /*-------------------------------------------------------*/
-                
-                //창 닫기 esc 
-                r.keyPress(27);
-                r.keyRelease(27);
                 
                 r.delay(500);
-                //네 위치 변하지 않음
-                r.mouseMove(970, 570);
-                r.mousePress(InputEvent.BUTTON1_MASK);
-                r.mouseRelease(InputEvent.BUTTON1_MASK);
+                
+                r.keyPress(97); //우측화살표
+                r.keyRelease(97); //우측화살표
+                r.keyPress(97); //우측화살표
+                r.keyRelease(97); //우측화살표
+                r.delay(100);
+                r.keyPress(96); //우측화살표
+                r.keyRelease(96); //우측화살표
+                r.delay(100);
+                r.keyPress(96); //우측화살표
+                r.keyRelease(96); //우측화살표
+                r.delay(100);
+                r.keyPress(96); //우측화살표
+                r.keyRelease(96); //우측화살표
+                r.delay(100);
+                r.keyPress(96); //우측화살표
+                r.keyRelease(96); //우측화살표
+                r.delay(100);
+                r.keyPress(96); //우측화살표
+                r.keyRelease(96); //우측화살표
+                r.delay(300);
+                
+                
+                r.keyPress(27); //우측화살표
+                r.keyRelease(27); //우측화살표
                 
                 // 하단으로 20 이동
                 mouseKeyPoint = mouseKeyPoint + plusPoint;

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toymacro;
+package toymacro2;
 
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class F_4_checkProcessFunctionOption {
+public class Loader_update3 {
     public static void main(String[] args) {
         //나는야 Loader Test를 정복하기위해 끄적여진 놈이다.
         //나는야 Loader Test를 정복하기위해 끄적여진 놈이다.
@@ -19,7 +19,7 @@ public class F_4_checkProcessFunctionOption {
             Robot r = new Robot();
             
             //반복횟수
-            int loopCount = 38;
+            int loopCount = 31;
             
             //가로에서 떨어진 정도
             int widthPoint = 160;             
@@ -69,16 +69,16 @@ public class F_4_checkProcessFunctionOption {
                 r.delay(500);
                 
                 //펑션으로 이동
-                r.mouseMove(850, 620);
+                r.mouseMove(1090, 800);
                 
-                
-                r.delay(200);
-                //r.keyPress(18);
+                //더블클릭
+                r.delay(500);
+                r.keyPress(18);
                 r.mousePress(InputEvent.BUTTON1_MASK);
-                //r.delay(500);
-                //r.mouseMove(1430, 880);
+                r.delay(500);
+                r.mouseMove(1430, 880);
                 r.mouseRelease(InputEvent.BUTTON1_MASK);
-                r.delay(200);
+                r.keyRelease(18);
                 
                 
                 // 하단으로 20 이동

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toymacro;
+package toymacro2;
 
 /**
  *
@@ -26,20 +26,20 @@ public class Index extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("í•œì»´ ê³ ë”•", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("ÇÑÄÄ °íµñ", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PMacro");
 
-        jButton1.setText("ê¸°ëŠ¥ë§Œë“¤ê¸°");
+        jButton1.setText("±â´É¸¸µé±â");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("ì‹¤í–‰");
+        jButton2.setText("½ÇÇà");
 
-        jLabel2.setText("ê°•ì œ ì¢…ë£ŒëŠ” ctrl + F9 ìž…ë‹ˆë‹¤.");
+        jLabel2.setText("°­Á¦ Á¾·á´Â ctrl + F9 ÀÔ´Ï´Ù.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
