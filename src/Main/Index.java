@@ -5,6 +5,7 @@
  */
 package Main;
 
+import material.MousePoint;
 import toymacro2.*;
 
 /**
@@ -12,7 +13,6 @@ import toymacro2.*;
  * @author dydej
  */
 public class Index extends javax.swing.JFrame {
-
     public Index() {
         initComponents();
     }
@@ -25,6 +25,7 @@ public class Index extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -33,15 +34,29 @@ public class Index extends javax.swing.JFrame {
         jLabel1.setText("PMacro");
 
         jButton1.setText("기능만들기");
+        jButton1.setActionCommand("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonClickEvent(evt);
             }
         });
 
         jButton2.setText("실행");
 
         jLabel2.setText("강제 종료는 ctrl + F9 입니다.");
+
+        jButton3.setText("TESTBUTTON");
+        jButton3.setActionCommand("testClick");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonClickEvent(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,14 +79,19 @@ public class Index extends javax.swing.JFrame {
                         .addGap(164, 164, 164))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(34, 34, 34))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(27, 27, 27)
                 .addComponent(jButton1)
                 .addGap(28, 28, 28)
                 .addComponent(jButton2)
@@ -83,9 +103,30 @@ public class Index extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        addmacro.getInstance();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
+        if(evt.getActionCommand().equals("Add")){
+            System.out.println("test");
+            addmacro.getInstance();
+        }
+        
+//        if(evt.getActionCommand().equals("testClick")){
+//            MousePoint checkXY = new MousePoint();
+//            //checkXY.getMousePoint();
+//            System.out.println(checkXY.getMousePoint().get("clickPointX"));
+//            System.out.println(checkXY.getMousePoint().get("clickPointY"));
+//        }
+    }//GEN-LAST:event_buttonClickEvent
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        
+        
+//        if(evt.getActionCommand().equals("testClick")){
+            MousePoint checkXY = new MousePoint();
+            //checkXY.getMousePoint();
+            System.out.println(checkXY.getMousePoint().get("clickPointX"));
+            System.out.println(checkXY.getMousePoint().get("clickPointY"));
+//        }
+    }//GEN-LAST:event_jButton3MouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -123,6 +164,7 @@ public class Index extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
