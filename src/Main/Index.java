@@ -5,6 +5,7 @@
  */
 package Main;
 
+import java.util.HashMap;
 import material.MousePoint;
 import toymacro2.*;
 
@@ -13,6 +14,9 @@ import toymacro2.*;
  * @author dydej
  */
 public class Index extends javax.swing.JFrame {
+    
+    HashMap<Object, Object> mouseClickPoint = new HashMap<>();
+    
     public Index() {
         initComponents();
     }
@@ -26,6 +30,7 @@ public class Index extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,6 +63,8 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setText("jTextField1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,7 +83,9 @@ public class Index extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
-                        .addGap(164, 164, 164))
+                        .addGap(48, 48, 48)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addContainerGap())
@@ -93,11 +102,17 @@ public class Index extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addGap(27, 27, 27)
                 .addComponent(jButton1)
-                .addGap(28, 28, 28)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -118,14 +133,39 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonClickEvent
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        
-        
 //        if(evt.getActionCommand().equals("testClick")){
-            MousePoint checkXY = new MousePoint();
-            //checkXY.getMousePoint();
-            System.out.println(checkXY.getMousePoint().get("clickPointX"));
-            System.out.println(checkXY.getMousePoint().get("clickPointY"));
-//        }
+            //MousePoint checkXY = new MousePoint();
+            //1. 생성자쪽에서 프레임을 올리게끔 하고
+            //2. 이후 마우스 이벤트 거시기를 사용해 값을 받아오게끔 해야함
+            //3. .get을 두번 호출하니 2개가 생긴거였음
+            
+            //비동기 처리를 해야함 이부분에서 안그럼 정상적으로 값을 받아오지않음
+//            mouseClickPoint = checkXY.getMousePoint();
+
+            // 마우스 클릭 이벤트 처리를 위한 스레드
+    Thread clickThread = new Thread(() -> {
+        MousePoint checkXY = new MousePoint();
+        HashMap<String, Integer> mouseClickPoint = checkXY.getMousePoint();
+
+        // 마우스 클릭 이벤트가 발생하면 여기에서 처리
+        int clickX = mouseClickPoint.get("clickPointX");
+        int clickY = mouseClickPoint.get("clickPointY");
+        
+        // 이제 마우스 클릭 좌표를 가지고 다른 작업을 수행할 수 있음
+        System.out.println("Click coordinates: (" + clickX + ", " + clickY + ")");
+    });
+
+    clickThread.start(); // 스레드 시작
+
+    try {
+        clickThread.join(); // 스레드가 종료될 때까지 대기
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+
+
+            
+            System.out.println(mouseClickPoint.get("clickPointX"));
     }//GEN-LAST:event_jButton3MouseClicked
 
     public static void main(String args[]) {
@@ -167,5 +207,6 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
