@@ -18,10 +18,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class MousePoint {
-    private HashMap widthHeight = new HashMap();
-    private boolean mouseClicked = true;
-    
-        public synchronized HashMap getMousePoint(){
+        boolean clickCheck = false;
+        public HashMap getMousePoint(){
+                HashMap widthHeight = new HashMap();
+                
                 try {
                         JPanel panel = new JPanel() {
                                 @Override
@@ -53,7 +53,7 @@ public class MousePoint {
                         if (! frame.isVisible()){
                                 frame.setVisible(true);
                         }
-                        
+
                         panel.addMouseListener(new MouseAdapter() {
                                 @Override
                                 public void mouseClicked(MouseEvent e) {
@@ -62,26 +62,18 @@ public class MousePoint {
                                         widthHeight.put("clickPointY", e.getY());
 
                                         //******종료하는 친구다.******
-                                        
-                                        //frame.dispose();
-                                        
-                                        synchronized (MousePoint.this){
-                                            mouseClicked = true;
-                                            MousePoint.this.notify(); //대기중인 스레드에게 알림
-                                        }
+                                        frame.dispose();
+                                        clickCheck = true;
                                 }
                         });
-                        
-                        //마우스 클릭 이벤트가 발생할 때까지 대기
-                        synchronized (this){
-                            while (!mouseClicked) {
-                                wait();
-                            }
-                        }
-                        
                 } catch (Exception e) {
                         System.err.println(e);
                 }
+                while (clickCheck){
+                    
+                }
+                
+                
                 return widthHeight;
         }
 }

@@ -133,37 +133,20 @@ public class Index extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonClickEvent
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        
+        
 //        if(evt.getActionCommand().equals("testClick")){
-            //MousePoint checkXY = new MousePoint();
+            MousePoint checkXY = new MousePoint();
             //1. 생성자쪽에서 프레임을 올리게끔 하고
             //2. 이후 마우스 이벤트 거시기를 사용해 값을 받아오게끔 해야함
             //3. .get을 두번 호출하니 2개가 생긴거였음
+            //checkXY.getMousePoint();
+            //System.out.println(checkXY.getMousePoint().get("clickPointX"));
             
             //비동기 처리를 해야함 이부분에서 안그럼 정상적으로 값을 받아오지않음
-//            mouseClickPoint = checkXY.getMousePoint();
-
-            // 마우스 클릭 이벤트 처리를 위한 스레드
-    Thread clickThread = new Thread(() -> {
-        MousePoint checkXY = new MousePoint();
-        HashMap<String, Integer> mouseClickPoint = checkXY.getMousePoint();
-
-        // 마우스 클릭 이벤트가 발생하면 여기에서 처리
-        int clickX = mouseClickPoint.get("clickPointX");
-        int clickY = mouseClickPoint.get("clickPointY");
-        
-        // 이제 마우스 클릭 좌표를 가지고 다른 작업을 수행할 수 있음
-        System.out.println("Click coordinates: (" + clickX + ", " + clickY + ")");
-    });
-
-    clickThread.start(); // 스레드 시작
-
-    try {
-        clickThread.join(); // 스레드가 종료될 때까지 대기
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-    }
-
-
+            mouseClickPoint = checkXY.getMousePoint();
+            
+            // 이 이벤트는 ADD화면에서 일괄적으로 처리하게 만들기
             
             System.out.println(mouseClickPoint.get("clickPointX"));
     }//GEN-LAST:event_jButton3MouseClicked
