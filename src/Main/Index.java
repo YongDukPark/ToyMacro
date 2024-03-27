@@ -149,6 +149,7 @@ public class Index extends javax.swing.JFrame {
             // 이 이벤트는 ADD화면에서 일괄적으로 처리하게 만들기
             
             System.out.println(mouseClickPoint.get("clickPointX"));
+            
     }//GEN-LAST:event_jButton3MouseClicked
 
     public static void main(String args[]) {

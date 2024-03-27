@@ -69,10 +69,9 @@ public class MousePoint {
                 } catch (Exception e) {
                         System.err.println(e);
                 }
-                while (clickCheck){
-                    
-                }
-                
+//                while (clickCheck){
+//                    
+//                }
                 
                 return widthHeight;
         }
