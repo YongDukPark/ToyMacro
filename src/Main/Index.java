@@ -5,6 +5,8 @@
  */
 package Main;
 
+import Bean.MacroAction;
+import java.util.ArrayList;
 import java.util.HashMap;
 import material.MousePoint;
 import toymacro2.*;
@@ -16,11 +18,14 @@ import toymacro2.*;
 public class Index extends javax.swing.JFrame {
     
     HashMap<Object, Object> mouseClickPoint = new HashMap<>();
+    ArrayList<MacroAction> arrayList = new ArrayList<>();
     
     public Index() {
         initComponents();
     }
-
+    public Index(ArrayList<MacroAction> getArrayList){
+        this.arrayList = getArrayList;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,7 +126,7 @@ public class Index extends javax.swing.JFrame {
     private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
         if(evt.getActionCommand().equals("Add")){
             System.out.println("test");
-            addmacro.getInstance();
+            addmacro1.getInstance(arrayList);
         }
         
 //        if(evt.getActionCommand().equals("testClick")){

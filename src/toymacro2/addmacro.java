@@ -24,6 +24,11 @@ public class addmacro extends javax.swing.JFrame {
     private static addmacro addmacro;
     boolean clickCheck = false;
     
+    String actionType = null;
+    HashMap<Object, Object> clickPoint = new HashMap<>();
+    
+    
+    
     private addmacro() {
         initComponents();
     }
@@ -54,14 +59,14 @@ public class addmacro extends javax.swing.JFrame {
                         Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
                         int screenResolution = toolkit.getScreenResolution();
                         
-                        System.out.println("출력값1");
-                        System.out.println(screenResolution);
+//                        System.out.println("출력값1");
+//                        System.out.println(screenResolution);
                         
                         int centerX = (int) (res.width * 0.5 * (96.0 / screenResolution));
                         int centerY = (int) (res.height * 0.5 * (96.0 / screenResolution));
                         
-                        System.out.println(centerX);
-                        System.out.println(centerY);
+//                        System.out.println(centerX);
+//                        System.out.println(centerY);
                         
                         System.out.println("화면 전체해상도 : " + res.width + " x " + res.height);  
 
@@ -94,8 +99,8 @@ public class addmacro extends javax.swing.JFrame {
                                         widthHeight.put("clickPointX", e.getX());
                                         widthHeight.put("clickPointY", e.getY());
                                         
-                                        System.out.println(e.getX());
-                                        System.out.println(e.getY());
+//                                        System.out.println(e.getX());
+//                                        System.out.println(e.getY());
                                         //jList1.
                                         String[] strings = new String[jList1.getModel().getSize()+1];
                                         
@@ -138,6 +143,8 @@ public class addmacro extends javax.swing.JFrame {
         button1 = new java.awt.Button();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
