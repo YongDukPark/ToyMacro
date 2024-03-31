@@ -6,6 +6,7 @@
 package Main;
 
 import Bean.MacroAction;
+import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import material.MousePoint;
@@ -23,9 +24,14 @@ public class Index extends javax.swing.JFrame {
     public Index() {
         initComponents();
     }
-    public Index(ArrayList<MacroAction> getArrayList){
-        this.arrayList = getArrayList;
+//    public void Index2(ArrayList<MacroAction> getArrayList){
+//        this.arrayList = getArrayList;
+//    }
+    
+    public void processArrayList(ArrayList<MacroAction> test) {
+        // ArrayList 처리 로직
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,6 +58,12 @@ public class Index extends javax.swing.JFrame {
         });
 
         jButton2.setText("실행");
+        jButton2.setActionCommand("macroAction");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonClickEvent(evt);
+            }
+        });
 
         jLabel2.setText("강제 종료는 ctrl + F9 입니다.");
 
@@ -127,6 +139,28 @@ public class Index extends javax.swing.JFrame {
         if(evt.getActionCommand().equals("Add")){
             System.out.println("test");
             addmacro1.getInstance(arrayList);
+            
+            jButton3.setText(String.valueOf(arrayList.size()));
+            
+        } else if (evt.getActionCommand().equals("macroAction")){
+            System.out.println("Main.Index.buttonClickEvent()");
+            
+            try {
+                Robot r = new Robot();
+                
+                for (int i = 0; i < arrayList.size(); i++) {
+                    //MacroAction get = arrayList.get(i);
+                    if(arrayList.get(i).getActionType().equals("click")){
+                        
+                    } else if (arrayList.get(i).getActionType().equals("keyboardClick")){
+                        
+                    }
+                    
+                }
+                
+            } catch (Exception e) {
+            }
+            
         }
         
 //        if(evt.getActionCommand().equals("testClick")){

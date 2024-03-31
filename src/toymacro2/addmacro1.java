@@ -6,6 +6,7 @@
 package toymacro2;
 
 import Bean.MacroAction;
+import Main.Index;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -121,8 +122,10 @@ public class addmacro1 extends javax.swing.JFrame {
         }
         
     }
-    private void setActionList(){
-        Index index = new Index();
+    
+    //왜안되는건데
+    public void setActionList(){
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -238,7 +241,8 @@ public class addmacro1 extends javax.swing.JFrame {
         } else if (evt.getActionCommand().equals("active")){    //적용
             setActionList();
         } else if (evt.getActionCommand().equals("actionSave")) {   //저장
-            
+            Index test = new Index();
+            test.processArrayList(arrayList);
         }
     }//GEN-LAST:event_clickButton
 
