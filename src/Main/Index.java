@@ -6,9 +6,14 @@
 package Main;
 
 import Bean.MacroAction;
+import java.awt.Dimension;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.event.InputEvent;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JButton;
 import material.MousePoint;
 import toymacro2.*;
 
@@ -24,13 +29,6 @@ public class Index extends javax.swing.JFrame {
     public Index() {
         initComponents();
     }
-//    public void Index2(ArrayList<MacroAction> getArrayList){
-//        this.arrayList = getArrayList;
-//    }
-    
-    public void processArrayList(ArrayList<MacroAction> test) {
-        // ArrayList 처리 로직
-    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -40,8 +38,7 @@ public class Index extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,20 +64,7 @@ public class Index extends javax.swing.JFrame {
 
         jLabel2.setText("강제 종료는 ctrl + F9 입니다.");
 
-        jButton3.setText("TESTBUTTON");
-        jButton3.setActionCommand("testClick");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonClickEvent(evt);
-            }
-        });
-
-        jTextField1.setText("jTextField1");
+        jLabel3.setText("마우스를 사용할경우 화면배율을 100%로 설정해주세요.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,58 +84,61 @@ public class Index extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
-                        .addGap(48, 48, 48)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49))
+                        .addGap(173, 173, 173))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(34, 34, 34))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(27, 27, 27)
+                .addGap(61, 61, 61)
                 .addComponent(jButton1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(28, 28, 28)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
     private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
-        if(evt.getActionCommand().equals("Add")){
-            System.out.println("test");
+        if(evt.getActionCommand().equals("Add")){   //실행창 띄우기
             addmacro1.getInstance(arrayList);
             
-            jButton3.setText(String.valueOf(arrayList.size()));
-            
-        } else if (evt.getActionCommand().equals("macroAction")){
-            System.out.println("Main.Index.buttonClickEvent()");
+        } else if (evt.getActionCommand().equals("macroAction")){   //매크로 액션
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
+            int screenResolution = toolkit.getScreenResolution();
+            int mousePointX = 0;
+            int mousePointY = 0;
             
             try {
                 Robot r = new Robot();
                 
+                //매크로 실행되는 구간
                 for (int i = 0; i < arrayList.size(); i++) {
-                    //MacroAction get = arrayList.get(i);
                     if(arrayList.get(i).getActionType().equals("click")){
+                        //화면 고려
+                        mousePointX = (int) ((int)arrayList.get(i).getClickPoint().get("clickX") * 0.5 * (96.0 / screenResolution));
+                        mousePointY = (int) ((int)arrayList.get(i).getClickPoint().get("clickY") * 0.5 * (96.0 / screenResolution));
                         
+                        //마우스 이동하는 부분
+                        r.mouseMove(0, 0);
+                        r.mouseMove((int)arrayList.get(i).getClickPoint().get("clickX"), (int)arrayList.get(i).getClickPoint().get("clickY"));
+                        
+                        // 마우스 클릭하는부분
+                        r.mousePress(InputEvent.BUTTON1_MASK);
+                        r.mouseRelease(InputEvent.BUTTON1_MASK);
                     } else if (arrayList.get(i).getActionType().equals("keyboardClick")){
                         
                     }
@@ -159,6 +146,7 @@ public class Index extends javax.swing.JFrame {
                 }
                 
             } catch (Exception e) {
+                    
             }
             
         }
@@ -170,26 +158,6 @@ public class Index extends javax.swing.JFrame {
 //            System.out.println(checkXY.getMousePoint().get("clickPointY"));
 //        }
     }//GEN-LAST:event_buttonClickEvent
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        
-        
-//        if(evt.getActionCommand().equals("testClick")){
-            MousePoint checkXY = new MousePoint();
-            //1. 생성자쪽에서 프레임을 올리게끔 하고
-            //2. 이후 마우스 이벤트 거시기를 사용해 값을 받아오게끔 해야함
-            //3. .get을 두번 호출하니 2개가 생긴거였음
-            //checkXY.getMousePoint();
-            //System.out.println(checkXY.getMousePoint().get("clickPointX"));
-            
-            //비동기 처리를 해야함 이부분에서 안그럼 정상적으로 값을 받아오지않음
-            mouseClickPoint = checkXY.getMousePoint();
-            
-            // 이 이벤트는 ADD화면에서 일괄적으로 처리하게 만들기
-            
-            System.out.println(mouseClickPoint.get("clickPointX"));
-            
-    }//GEN-LAST:event_jButton3MouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -227,9 +195,8 @@ public class Index extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

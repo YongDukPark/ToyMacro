@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +30,7 @@ public class addmacro1 extends javax.swing.JFrame {
     
     boolean clickCheck = false;
     DefaultTableModel model = new DefaultTableModel();
-    HashMap<Object, Object> clickPoint = new HashMap<>();
+    HashMap<Object, Object> clickPoint;
     
     MacroAction mouseClickPoint;
     ArrayList<MacroAction> arrayList = new ArrayList<>();
@@ -96,10 +97,12 @@ public class addmacro1 extends javax.swing.JFrame {
                         panel.addMouseListener(new MouseAdapter() {
                                 @Override
                                 public void mouseClicked(MouseEvent e) {
+                                        clickPoint = new HashMap<>();
+                                        mouseClickPoint = new MacroAction("click", clickPoint, true);;
                                         // x, y 지점 HashMap에 담기
                                         clickPoint.put("clickX", e.getX());
                                         clickPoint.put("clickY", e.getY());
-                                        mouseClickPoint = new MacroAction("click", clickPoint, true);
+//                                        mouseClickPoint = new MacroAction("click", clickPoint, true);
                                         
                                         model.addRow(new Object[]{mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         
@@ -120,12 +123,6 @@ public class addmacro1 extends javax.swing.JFrame {
         } catch (Exception e) {
             //dialog 날리기
         }
-        
-    }
-    
-    //왜안되는건데
-    public void setActionList(){
-        
     }
     
     @SuppressWarnings("unchecked")
@@ -190,6 +187,11 @@ public class addmacro1 extends javax.swing.JFrame {
 
         button4.setActionCommand("actionSave");
         button4.setLabel("저장");
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -239,10 +241,12 @@ public class addmacro1 extends javax.swing.JFrame {
         } else if (evt.getActionCommand().equals("deleteRow")) {    //Row삭제
             deleteRow();
         } else if (evt.getActionCommand().equals("active")){    //적용
-            setActionList();
+            //setActionList();
+            
         } else if (evt.getActionCommand().equals("actionSave")) {   //저장
-            Index test = new Index();
-            test.processArrayList(arrayList);
+            //창닫는부분
+            dispose();
+            //System.exit(0);
         }
     }//GEN-LAST:event_clickButton
 

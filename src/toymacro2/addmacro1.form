@@ -152,6 +152,9 @@
         <Property name="actionCommand" type="java.lang.String" value="actionSave"/>
         <Property name="label" type="java.lang.String" value="&#xc800;&#xc7a5;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clickButton"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
