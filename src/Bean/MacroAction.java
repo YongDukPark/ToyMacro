@@ -12,14 +12,20 @@ import java.util.HashMap;
  * @author Administrator
  */
 public class MacroAction {
+    private int indexNumber = 0;
     private String actionType = null;
     private HashMap<Object, Object> clickPoint = new HashMap<>();
     private boolean action = true;
     
-    public MacroAction(String actionType, HashMap<Object, Object> clickPoint, boolean action){
+    public MacroAction(int indexNumber, String actionType, HashMap<Object, Object> clickPoint, boolean action){
+        this.indexNumber = indexNumber;
         this.actionType = actionType;
         this.clickPoint = clickPoint;
         this.action = action;
+    }
+    
+    public void setIndexNumber(int indexNumber) {
+        this.indexNumber = indexNumber;
     }
     
     public void setActionType(String actionType) {
@@ -33,7 +39,11 @@ public class MacroAction {
     public void setAction(boolean action) {
         this.action = action;
     }
-
+    
+    public int getIndexNumber() {
+        return indexNumber;
+    }
+    
     public String getActionType() {
         return actionType;
     }

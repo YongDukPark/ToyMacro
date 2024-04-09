@@ -110,10 +110,17 @@ public class Index extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    public void deleteRow(ArrayList<Object> deleteRow){
+        for(int i = 0 ; i < deleteRow.size() ; i++){
+//            deleteRow.get(i)
+        }
+    }
+    
     
     private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
         if(evt.getActionCommand().equals("Add")){   //실행창 띄우기
             addmacro1.getInstance(arrayList);
+            System.out.println(arrayList.size());
             
         } else if (evt.getActionCommand().equals("macroAction")){   //매크로 액션
             Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -150,13 +157,6 @@ public class Index extends javax.swing.JFrame {
             }
             
         }
-        
-//        if(evt.getActionCommand().equals("testClick")){
-//            MousePoint checkXY = new MousePoint();
-//            //checkXY.getMousePoint();
-//            System.out.println(checkXY.getMousePoint().get("clickPointX"));
-//            System.out.println(checkXY.getMousePoint().get("clickPointY"));
-//        }
     }//GEN-LAST:event_buttonClickEvent
 
     public static void main(String args[]) {

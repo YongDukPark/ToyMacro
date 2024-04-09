@@ -35,6 +35,8 @@ public class addmacro1 extends javax.swing.JFrame {
     MacroAction mouseClickPoint;
     ArrayList<MacroAction> arrayList = new ArrayList<>();
     
+    ArrayList<Object> deleteRow;
+    
     private addmacro1(ArrayList<MacroAction> arrayList) {
         this.arrayList = arrayList;
         initComponents();
@@ -50,10 +52,20 @@ public class addmacro1 extends javax.swing.JFrame {
     }
     
     public void defaultSetting(){
-        model.setColumnIdentifiers(new Object[]{"동작", "위치", "사용"});
+        model.setColumnIdentifiers(new Object[]{"고유번호" ,"동작", "위치", "사용"});
         jTable1.setModel(model);
+        
+        //deleteRow 객체 생성부분
+        deleteRow = new ArrayList<>();
+        
         // 맨처음 init 을 진행한 후에 여기서 칼럼 및 거시기 정보들 바꾼다.
         // 그후 Row 생성하는 방식 채용한다. 메모리 신경쓰지말고 일단 하자
+        if(arrayList.size() > 0){
+            for(int i = 0 ; i < arrayList.size() ; i++){
+//                model.addRow(new Object[]{mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
+                model.addRow(new Object[]{arrayList.get(i).getActionType(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("clickX") + " ," + arrayList.get(i).getClickPoint().get("clickY"), arrayList.get(i).isAction()});
+            }
+        }
     }
     private void getMousePoint(){
                 try {
@@ -98,14 +110,23 @@ public class addmacro1 extends javax.swing.JFrame {
                                 @Override
                                 public void mouseClicked(MouseEvent e) {
                                         clickPoint = new HashMap<>();
-                                        mouseClickPoint = new MacroAction("click", clickPoint, true);;
+                                        
                                         // x, y 지점 HashMap에 담기
                                         clickPoint.put("clickX", e.getX());
                                         clickPoint.put("clickY", e.getY());
-//                                        mouseClickPoint = new MacroAction("click", clickPoint, true);
                                         
-                                        model.addRow(new Object[]{mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         
+                                        System.out.println("**************************************");
+                                        System.out.println(arrayList.size());
+                                        System.out.println("**************************************");
+                                        
+                                        // indexNumber 넣는부분 
+                                        if (arrayList.isEmpty()) {
+                                            mouseClickPoint = new MacroAction(1, "click", clickPoint, true);
+                                        } else if (arrayList.size() > 0) {
+                                            mouseClickPoint = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
+                                        }
+                                        model.addRow(new Object[]{1, mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         arrayList.add(mouseClickPoint);
                                         
                                         //******종료하는 친구다.******
@@ -120,6 +141,10 @@ public class addmacro1 extends javax.swing.JFrame {
         try {
             model.removeRow(jTable1.getSelectedRow());
             arrayList.remove(jTable1.getSelectedRow());
+            
+            //int로 값 가져오기
+            deleteRow.add(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString()));
+            
         } catch (Exception e) {
             //dialog 날리기
         }
@@ -233,7 +258,7 @@ public class addmacro1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void clickButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickButton
-        
+        Index deleteTest = new Index();
         if (evt.getActionCommand().equals("addMouseClickPoint")) {   //마우스 클릭 포인트
             getMousePoint();
         } else if (evt.getActionCommand().equals("addKeyBoaredPoint")) {    //키보드 클릭 포인트
@@ -242,8 +267,12 @@ public class addmacro1 extends javax.swing.JFrame {
             deleteRow();
         } else if (evt.getActionCommand().equals("active")){    //적용
             //setActionList();
-            
         } else if (evt.getActionCommand().equals("actionSave")) {   //저장
+            if(deleteRow.size() > 0){
+                deleteTest.deleteRow(deleteRow);
+            }
+            
+            
             //창닫는부분
             dispose();
             //System.exit(0);
