@@ -121,12 +121,14 @@ public class addmacro1 extends javax.swing.JFrame {
                                         System.out.println("**************************************");
                                         
                                         // indexNumber 넣는부분 
-                                        if (arrayList.isEmpty()) {
+                                        if (arrayList.size() == 0) {
                                             mouseClickPoint = new MacroAction(1, "click", clickPoint, true);
+                                            model.addRow(new Object[]{1, mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         } else if (arrayList.size() > 0) {
                                             mouseClickPoint = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
+                                            model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         }
-                                        model.addRow(new Object[]{1, mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
+                                        
                                         arrayList.add(mouseClickPoint);
                                         
                                         //******종료하는 친구다.******
