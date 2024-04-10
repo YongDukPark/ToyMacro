@@ -112,7 +112,11 @@ public class Index extends javax.swing.JFrame {
     
     public void deleteRow(ArrayList<Object> deleteRow){
         for(int i = 0 ; i < deleteRow.size() ; i++){
-//            deleteRow.get(i)
+            for(int j = 0 ; j < arrayList.size() ; j++){
+                if (arrayList.get(j).getIndexNumber() == Integer.parseInt(String.valueOf(deleteRow.get(i)))) {
+                    arrayList.remove(j);
+                }
+            }
         }
     }
     

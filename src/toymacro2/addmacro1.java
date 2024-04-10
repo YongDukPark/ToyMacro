@@ -62,8 +62,7 @@ public class addmacro1 extends javax.swing.JFrame {
         // 그후 Row 생성하는 방식 채용한다. 메모리 신경쓰지말고 일단 하자
         if(arrayList.size() > 0){
             for(int i = 0 ; i < arrayList.size() ; i++){
-//                model.addRow(new Object[]{mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
-                model.addRow(new Object[]{arrayList.get(i).getActionType(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("clickX") + " ," + arrayList.get(i).getClickPoint().get("clickY"), arrayList.get(i).isAction()});
+                model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("clickX") + " ," + arrayList.get(i).getClickPoint().get("clickY"), arrayList.get(i).isAction()});
             }
         }
     }
@@ -86,7 +85,7 @@ public class addmacro1 extends javax.swing.JFrame {
                         int centerX = (int) (res.width * 0.5 * (96.0 / screenResolution));
                         int centerY = (int) (res.height * 0.5 * (96.0 / screenResolution));
                         
-                        System.out.println("화면 전체해상도 : " + res.width + " x " + res.height);  
+                        //System.out.println("화면 전체해상도 : " + res.width + " x " + res.height);  
 
                         //마우스 위치 잡아주기
                         r.mouseMove(0, 0);
@@ -115,22 +114,16 @@ public class addmacro1 extends javax.swing.JFrame {
                                         clickPoint.put("clickX", e.getX());
                                         clickPoint.put("clickY", e.getY());
                                         
-                                        
-                                        System.out.println("**************************************");
-                                        System.out.println(arrayList.size());
-                                        System.out.println("**************************************");
-                                        
                                         // indexNumber 넣는부분 
                                         if (arrayList.size() == 0) {
                                             mouseClickPoint = new MacroAction(1, "click", clickPoint, true);
+                                            //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
                                             model.addRow(new Object[]{1, mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         } else if (arrayList.size() > 0) {
                                             mouseClickPoint = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
                                             model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, mouseClickPoint.getActionType(), mouseClickPoint.getClickPoint().get("clickX") + " ," + mouseClickPoint.getClickPoint().get("clickY"), mouseClickPoint.isAction()});
                                         }
-                                        
                                         arrayList.add(mouseClickPoint);
-                                        
                                         //******종료하는 친구다.******
                                         frame.dispose();
                                 }
@@ -141,14 +134,24 @@ public class addmacro1 extends javax.swing.JFrame {
         }
     private void deleteRow(){
         try {
-            model.removeRow(jTable1.getSelectedRow());
+//            System.out.println(jTable1.getSelectedRow());
+            
+            
             arrayList.remove(jTable1.getSelectedRow());
             
+            
             //int로 값 가져오기
-            deleteRow.add(Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString()));
+            deleteRow.add(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString());
+//            for(int i = 0 ; i < deleteRow.size() ; i++){
+//                System.out.println("리스트 출력" + i+1);
+//                System.out.println(deleteRow.get(i));
+//            }
+            
+            model.removeRow(jTable1.getSelectedRow());
             
         } catch (Exception e) {
             //dialog 날리기
+            System.out.println(e);
         }
     }
     
