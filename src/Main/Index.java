@@ -149,8 +149,10 @@ public class Index extends javax.swing.JFrame {
                         // 마우스 클릭하는부분
                         r.mousePress(InputEvent.BUTTON1_MASK);
                         r.mouseRelease(InputEvent.BUTTON1_MASK);
-                    } else if (arrayList.get(i).getActionType().equals("keyboardClick")){
-                        
+                    } else if (arrayList.get(i).getActionType().equals("pressKey")){
+                        r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getClickPoint().get("pressKey"))));
+                        r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getClickPoint().get("pressKey"))));
+                        System.out.println(arrayList.get(i).getClickPoint().get("pressKey"));
                     }
                 }
             } catch (Exception e) {

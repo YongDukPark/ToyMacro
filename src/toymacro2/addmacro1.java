@@ -67,8 +67,8 @@ public class addmacro1 extends javax.swing.JFrame {
             for(int i = 0 ; i < arrayList.size() ; i++){
                 if(arrayList.get(i).getActionType().equals("click")){
                     model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("clickX") + " ," + arrayList.get(i).getClickPoint().get("clickY"), arrayList.get(i).isAction()});
-                } else if(arrayList.get(i).getActionType().equals("keyboardClick")){
-                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressKey") + " - " + arrayList.get(i).getClickPoint().get("pressKeyImpormation"), arrayList.get(i).isAction()});
+                } else if(arrayList.get(i).getActionType().equals("pressKey")){
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressKeyImpormation") + " - " + arrayList.get(i).getClickPoint().get("pressKey"), arrayList.get(i).isAction()});
                 }
             }
         }
@@ -186,14 +186,14 @@ public class addmacro1 extends javax.swing.JFrame {
     private void saveKeyBoardPoint(){
         clickPoint = new HashMap<>();
         clickPoint.put("pressKey", Integer.parseInt(settingText2.getText()));
-        clickPoint.put("pressKeyImpormation", Integer.parseInt(settingText2.getText()));
+        clickPoint.put("pressKeyImpormation", settingText1.getText());
         
         if (arrayList.size() == 0) {
-            taskList = new MacroAction(1, "keyboardClick", clickPoint, true);
+            taskList = new MacroAction(1, "pressKey", clickPoint, true);
             //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
             model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
         } else if (arrayList.size() > 0) {
-            taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "keyboardClick", clickPoint, true);
+            taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
             model.addRow(new Object[]{arrayList.get(arrayList.size()-1), taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
         }
         arrayList.add(taskList);
