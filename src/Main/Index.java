@@ -120,7 +120,6 @@ public class Index extends javax.swing.JFrame {
         }
     }
     
-    
     private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
         if(evt.getActionCommand().equals("Add")){   //실행창 띄우기
             addmacro1.getInstance(arrayList);
@@ -153,13 +152,10 @@ public class Index extends javax.swing.JFrame {
                     } else if (arrayList.get(i).getActionType().equals("keyboardClick")){
                         
                     }
-                    
                 }
-                
             } catch (Exception e) {
-                    
+                System.err.println(e);
             }
-            
         }
     }//GEN-LAST:event_buttonClickEvent
 
