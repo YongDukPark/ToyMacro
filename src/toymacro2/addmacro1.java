@@ -40,6 +40,9 @@ public class addmacro1 extends javax.swing.JFrame {
     
     ArrayList<Object> deleteRow;
     
+    JPanel panel;
+    KeyboardFocusManager manager;
+    
     private addmacro1(ArrayList<MacroAction> arrayList) {
         this.arrayList = arrayList;
         initComponents();
@@ -141,9 +144,10 @@ public class addmacro1 extends javax.swing.JFrame {
     private void getKeyBoardPoint(){
         try {
             jDialog1.setVisible(true);
-            
+            manager = null;
+            panel = null;
             // JPanel 생성
-            JPanel panel = new JPanel() {
+            panel = new JPanel() {
                 @Override
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
@@ -164,7 +168,7 @@ public class addmacro1 extends javax.swing.JFrame {
             });
             
             //Tab키 이벤트 적용하는부분
-            KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
             manager.addKeyEventDispatcher(new KeyEventDispatcher() {
                 @Override
                 public boolean dispatchKeyEvent(KeyEvent e) {
@@ -183,21 +187,91 @@ public class addmacro1 extends javax.swing.JFrame {
         }
     }
     
-    private void saveKeyBoardPoint(){
-        clickPoint = new HashMap<>();
-        clickPoint.put("pressKey", Integer.parseInt(settingText2.getText()));
-        clickPoint.put("pressKeyImpormation", settingText1.getText());
-        
-        if (arrayList.size() == 0) {
-            taskList = new MacroAction(1, "pressKey", clickPoint, true);
-            //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
-            model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
-        } else if (arrayList.size() > 0) {
-            taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
-            model.addRow(new Object[]{arrayList.get(arrayList.size()-1), taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+    private void getMixKeyBoardDialog(){
+        jDialog2.setVisible(true);
+    }
+    
+    private void getMixKeyBoardPoint(String mixKeyButton){
+        manager = null;
+        panel = null;
+        try {
+            
+            System.out.println("여 오는가" + mixKeyButton);
+            // JPanel 생성
+            panel = new JPanel() {
+                @Override
+                public void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                }
+            };
+            jDialog2.add(panel);
+            
+            // 키 이벤트를 받을 수 있도록 포커스 설정
+            panel.setFocusable(true); 
+            
+            panel.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    System.out.println("여는 오는가");
+                    if(mixKeyButton.equals("putKey1")){
+                        settingMixText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
+                        settingMixText2.setText(String.valueOf(e.getKeyCode()));
+                        settingMixText3.setText(String.valueOf(e.getKeyChar()));
+                    } else if (mixKeyButton.equals("putKey2")){
+                        settingMixText4.setText(KeyEvent.getKeyText(e.getKeyCode()));
+                        settingMixText5.setText(String.valueOf(e.getKeyCode()));
+                        settingMixText6.setText(String.valueOf(e.getKeyChar()));
+                    }
+                }
+            });
+            //Tab키 이벤트 적용하는부분
+            manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            manager.addKeyEventDispatcher(new KeyEventDispatcher() {
+                @Override
+                public boolean dispatchKeyEvent(KeyEvent e) {
+                    System.out.println("여는 오는거 같드만");
+                    
+                    // 탭 키가 눌렸는지 확인
+//                    if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                        if(mixKeyButton.equals("putKey1")){
+                            settingMixText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
+                            settingMixText2.setText(String.valueOf(e.getKeyCode()));
+                            settingMixText3.setText(String.valueOf(e.getKeyChar()));
+                        } else if (mixKeyButton.equals("putKey2")){
+                            settingMixText4.setText(KeyEvent.getKeyText(e.getKeyCode()));
+                            settingMixText5.setText(String.valueOf(e.getKeyCode()));
+                            settingMixText6.setText(String.valueOf(e.getKeyChar()));
+                        }
+//                    }
+                    // 다른 키 이벤트는 여기서 처리하지 않음
+                    return true;
+                }
+            });
+        } catch (Exception e) {
+            System.err.println(e);
         }
-        arrayList.add(taskList);
-        jDialog1.dispose();
+    }
+    
+    // 키보드 정보 등록버튼
+    private void saveKeyBoardPoint(String actionType){
+        if (actionType.equals("typeSingle")) {
+            clickPoint = new HashMap<>();
+            clickPoint.put("pressKey", Integer.parseInt(settingText2.getText()));
+            clickPoint.put("pressKeyImpormation", settingText1.getText());
+
+            if (arrayList.size() == 0) {
+                taskList = new MacroAction(1, "pressKey", clickPoint, true);
+                //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
+                model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+            } else if (arrayList.size() > 0) {
+                taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
+                model.addRow(new Object[]{arrayList.get(arrayList.size()-1), taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+            }
+            arrayList.add(taskList);
+            jDialog1.dispose();
+        } else if (actionType.equals("typeMulte")){
+            
+        }
     }
     
     private void deleteRow(){
@@ -231,6 +305,25 @@ public class addmacro1 extends javax.swing.JFrame {
         settingText6 = new javax.swing.JLabel();
         keyPutButton = new javax.swing.JButton();
         keyCanselButton = new javax.swing.JButton();
+        jDialog2 = new javax.swing.JDialog();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        settingMixText1 = new javax.swing.JLabel();
+        settingMixText2 = new javax.swing.JLabel();
+        settingMixText3 = new javax.swing.JLabel();
+        settingMixText4 = new javax.swing.JLabel();
+        settingMixText5 = new javax.swing.JLabel();
+        settingMixText6 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         button1 = new java.awt.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -238,12 +331,12 @@ public class addmacro1 extends javax.swing.JFrame {
         button3 = new java.awt.Button();
         button4 = new java.awt.Button();
         button5 = new java.awt.Button();
+        button6 = new java.awt.Button();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jDialog1.setMinimumSize(new java.awt.Dimension(650, 400));
-        jDialog1.setPreferredSize(new java.awt.Dimension(1000, 1000));
 
         jLabel1.setFont(new java.awt.Font("굴림", 0, 36)); // NOI18N
         jLabel1.setText("키보드 입력값");
@@ -289,6 +382,11 @@ public class addmacro1 extends javax.swing.JFrame {
 
         keyCanselButton.setText("취소");
         keyCanselButton.setFocusable(false);
+        keyCanselButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                keyCanselButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -346,6 +444,152 @@ public class addmacro1 extends javax.swing.JFrame {
                 .addContainerGap(109, Short.MAX_VALUE))
         );
 
+        jDialog2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog2.setMinimumSize(new java.awt.Dimension(464, 279));
+
+        jLabel2.setText("key1");
+
+        jLabel3.setText("key2");
+
+        jButton1.setText("key1 등록");
+        jButton1.setActionCommand("putKey1");
+        jButton1.setFocusable(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        jButton2.setText("key2 등록");
+        jButton2.setActionCommand("putKey2");
+        jButton2.setFocusable(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        jLabel6.setText("pressKey : ");
+
+        jLabel7.setText("keyCode : ");
+
+        jLabel8.setText("Information : ");
+
+        jLabel9.setText("pressKey : ");
+
+        jLabel10.setText("keyCode : ");
+        jLabel10.setToolTipText("");
+
+        jLabel11.setText("Information : ");
+
+        jButton3.setText("저장");
+        jButton3.setActionCommand("saveMixKeyBoardPoint");
+        jButton3.setFocusable(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3clickButton(evt);
+            }
+        });
+
+        jButton4.setText("삭제");
+        jButton4.setActionCommand("saveMixKeyBoardPoint");
+        jButton4.setFocusable(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4clickButton(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(37, 37, 37)
+                                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7)))
+                            .addGroup(jDialog2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(37, 37, 37)
+                                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jDialog2Layout.createSequentialGroup()
+                                    .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(settingMixText1)
+                                        .addComponent(settingMixText2))
+                                    .addGap(157, 157, 157)
+                                    .addComponent(jButton1))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog2Layout.createSequentialGroup()
+                                    .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(settingMixText4)
+                                        .addComponent(settingMixText5))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton2)))
+                            .addComponent(settingMixText3)
+                            .addComponent(settingMixText6)))
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(jButton3)
+                        .addGap(37, 37, 37)
+                        .addComponent(jButton4)))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog2Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(80, 80, 80))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog2Layout.createSequentialGroup()
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel6)
+                            .addComponent(settingMixText1)
+                            .addComponent(jButton1))
+                        .addGap(2, 2, 2)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(settingMixText2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(settingMixText3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel9)
+                            .addComponent(settingMixText4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(settingMixText5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(settingMixText6))
+                        .addGap(13, 13, 13)
+                        .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4))
+                        .addGap(11, 11, 11))))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         button1.setActionCommand("addMouseClickPoint");
@@ -386,9 +630,17 @@ public class addmacro1 extends javax.swing.JFrame {
             }
         });
 
-        button5.setActionCommand("addKeyBoaredPoint");
-        button5.setLabel("키보드 액션 만들기");
+        button5.setActionCommand("addMixKeyBoaredPoint");
+        button5.setLabel("혼합 키 만들기");
         button5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        button6.setActionCommand("addKeyBoaredPoint");
+        button6.setLabel("키보드 액션 만들기");
+        button6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clickButton(evt);
             }
@@ -407,7 +659,8 @@ public class addmacro1 extends javax.swing.JFrame {
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(270, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -417,9 +670,11 @@ public class addmacro1 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,6 +697,16 @@ public class addmacro1 extends javax.swing.JFrame {
             getMousePoint();
         } else if (evt.getActionCommand().equals("addKeyBoaredPoint")) {    //키보드 클릭 포인트
             getKeyBoardPoint();
+        } else if (evt.getActionCommand().equals("addMixKeyBoaredPoint")){  //키보드 믹스 클릭 포인트
+            getMixKeyBoardDialog();
+        } else if (evt.getActionCommand().equals("putKey1")){   //혼합키1번 설정버튼
+            getMixKeyBoardPoint(evt.getActionCommand());
+        } else if (evt.getActionCommand().equals("putKey2")){   //혼합키2번 설정버튼
+            getMixKeyBoardPoint(evt.getActionCommand());
+        } else if (evt.getActionCommand().equals("saveKeyBoardPoint")){
+            saveKeyBoardPoint("typeSingle");
+        } else if (evt.getActionCommand().equals("saveMixKeyBoardPoint")){
+            saveKeyBoardPoint("typeMulte");
         } else if (evt.getActionCommand().equals("deleteRow")) {    //Row삭제
             deleteRow();
         } else if (evt.getActionCommand().equals("active")){    //적용
@@ -453,10 +718,20 @@ public class addmacro1 extends javax.swing.JFrame {
             //창닫는부분
             dispose();
             //System.exit(0);
-        } else if (evt.getActionCommand().equals("saveKeyBoardPoint")){
-            saveKeyBoardPoint();
         }
     }//GEN-LAST:event_clickButton
+
+    private void keyCanselButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyCanselButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_keyCanselButtonActionPerformed
+
+    private void jButton3clickButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3clickButton
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3clickButton
+
+    private void jButton4clickButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4clickButton
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4clickButton
 
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
@@ -497,13 +772,33 @@ public class addmacro1 extends javax.swing.JFrame {
     private java.awt.Button button3;
     private java.awt.Button button4;
     private java.awt.Button button5;
+    private java.awt.Button button6;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton keyCanselButton;
     private javax.swing.JButton keyPutButton;
+    private javax.swing.JLabel settingMixText1;
+    private javax.swing.JLabel settingMixText2;
+    private javax.swing.JLabel settingMixText3;
+    private javax.swing.JLabel settingMixText4;
+    private javax.swing.JLabel settingMixText5;
+    private javax.swing.JLabel settingMixText6;
     private javax.swing.JLabel settingText1;
     private javax.swing.JLabel settingText2;
     private javax.swing.JLabel settingText3;
