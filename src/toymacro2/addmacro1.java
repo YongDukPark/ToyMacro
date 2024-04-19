@@ -69,10 +69,12 @@ public class addmacro1 extends javax.swing.JFrame {
         // 그후 Row 생성하는 방식 채용한다. 메모리 신경쓰지말고 일단 하자
         if(arrayList.size() > 0){
             for(int i = 0 ; i < arrayList.size() ; i++){
-                if(arrayList.get(i).getActionType().equals("click")){
+                if (arrayList.get(i).getActionType().equals("click")) {
                     model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("clickX") + " ," + arrayList.get(i).getClickPoint().get("clickY"), arrayList.get(i).isAction()});
-                } else if(arrayList.get(i).getActionType().equals("pressKey")){
-                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressKeyImpormation") + " - " + arrayList.get(i).getClickPoint().get("pressKey"), arrayList.get(i).isAction()});
+                } else if (arrayList.get(i).getActionType().equals("pressKey")) {
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressKeyImpormation") + "-" + arrayList.get(i).getClickPoint().get("pressKey"), arrayList.get(i).isAction()});
+                } else if (arrayList.get(i).getActionType().equals("pressMultyKey")) {
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressMultyKeyImpormation1") + "-" + arrayList.get(i).getClickPoint().get("pressMultyKey1") + " + " + arrayList.get(i).getClickPoint().get("pressMultyKeyImpormation2") + "-" + arrayList.get(i).getClickPoint().get("pressMultyKey2"), arrayList.get(i).isAction()});
                 }
             }
         }
@@ -178,7 +180,7 @@ public class addmacro1 extends javax.swing.JFrame {
     
     private void getMixKeyBoardPoint(String mixKeyButton){
         try {
-            if(this.manager != null){
+            if (this.manager != null) {
                 this.manager.removeKeyEventDispatcher(dispatcher);
             }
             
@@ -223,28 +225,29 @@ public class addmacro1 extends javax.swing.JFrame {
             if (arrayList.size() == 0) {
                 taskList = new MacroAction(1, "pressKey", clickPoint, true);
                 //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
-                model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+                model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + "-" + settingText2.getText(), taskList.isAction()});
             } else if (arrayList.size() > 0) {
                 taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
-                model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+                model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), settingText1.getText() + "-" + settingText2.getText(), taskList.isAction()});
             }
             arrayList.add(taskList);
             jDialog1.dispose();
-        } else if (actionType.equals("typeMulte")){
+        } else if (actionType.equals("typeMulty")){
             clickPoint = new HashMap<>();
-            clickPoint.put("pressKey", Integer.parseInt(settingText2.getText()));
-            clickPoint.put("pressKeyImpormation", settingText1.getText());
-
+            clickPoint.put("pressMultyKey1", Integer.parseInt(settingMixText2.getText()));
+            clickPoint.put("pressMultyKey2", Integer.parseInt(settingMixText5.getText()));
+            clickPoint.put("pressMultyKeyImpormation1", settingMixText1.getText());
+            clickPoint.put("pressMultyKeyImpormation2", settingMixText4.getText());
+            
             if (arrayList.size() == 0) {
-                taskList = new MacroAction(1, "pressKey", clickPoint, true);
-                //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
-                model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+                taskList = new MacroAction(1, "pressMultyKey", clickPoint, true);
+                model.addRow(new Object[]{1, taskList.getActionType(), settingMixText1.getText() + "-" + settingMixText2.getText() + " + " + settingMixText4.getText() + "-" + settingMixText5.getText(), taskList.isAction()});
             } else if (arrayList.size() > 0) {
-                taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
-                model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+                taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressMultyKey", clickPoint, true);
+                model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), settingMixText1.getText() + "-" + settingMixText2.getText() + " + " + settingMixText4.getText() + "-" + settingMixText5.getText(), taskList.isAction()});
             }
             arrayList.add(taskList);
-            jDialog1.dispose();
+            jDialog2.dispose();
         }
     }
     
@@ -355,11 +358,6 @@ public class addmacro1 extends javax.swing.JFrame {
 
         keyCanselButton.setText("취소");
         keyCanselButton.setFocusable(false);
-        keyCanselButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                keyCanselButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -418,7 +416,8 @@ public class addmacro1 extends javax.swing.JFrame {
         );
 
         jDialog2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jDialog2.setMinimumSize(new java.awt.Dimension(464, 279));
+        jDialog2.setLocationByPlatform(true);
+        jDialog2.setMinimumSize(new java.awt.Dimension(464, 329));
 
         jLabel2.setText("key1");
 
@@ -460,18 +459,13 @@ public class addmacro1 extends javax.swing.JFrame {
         jButton3.setFocusable(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3clickButton(evt);
+                clickButton(evt);
             }
         });
 
         jButton4.setText("삭제");
         jButton4.setActionCommand("saveMixKeyBoardPoint");
         jButton4.setFocusable(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4clickButton(evt);
-            }
-        });
 
         javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
         jDialog2.getContentPane().setLayout(jDialog2Layout);
@@ -677,7 +671,7 @@ public class addmacro1 extends javax.swing.JFrame {
         } else if (evt.getActionCommand().equals("saveKeyBoardPoint")){
             saveKeyBoardPoint("typeSingle");
         } else if (evt.getActionCommand().equals("saveMixKeyBoardPoint")){
-            saveKeyBoardPoint("typeMulte");
+            saveKeyBoardPoint("typeMulty");
         } else if (evt.getActionCommand().equals("deleteRow")) {    //Row삭제
             deleteRow();
         } else if (evt.getActionCommand().equals("active")){    //적용
@@ -692,18 +686,6 @@ public class addmacro1 extends javax.swing.JFrame {
             //System.exit(0);
         }
     }//GEN-LAST:event_clickButton
-
-    private void keyCanselButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyCanselButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_keyCanselButtonActionPerformed
-
-    private void jButton3clickButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3clickButton
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3clickButton
-
-    private void jButton4clickButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4clickButton
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4clickButton
 
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */

@@ -181,17 +181,15 @@
             <Property name="text" type="java.lang.String" value="&#xcde8;&#xc18c;"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="keyCanselButtonActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JDialog" name="jDialog2">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="locationByPlatform" type="boolean" value="true"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[464, 279]"/>
+          <Dimension value="[464, 329]"/>
         </Property>
       </Properties>
 
@@ -393,7 +391,7 @@
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3clickButton"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clickButton"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton4">
@@ -402,9 +400,6 @@
             <Property name="actionCommand" type="java.lang.String" value="saveMixKeyBoardPoint"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4clickButton"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
