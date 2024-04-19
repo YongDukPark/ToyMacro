@@ -111,7 +111,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="&#xad74;&#xb9bc;" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="A"/>
+            <Property name="text" type="java.lang.String" value="&#xd0a4;&#xbcf4;&#xb4dc;&#xb97c;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
@@ -121,7 +121,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="&#xad74;&#xb9bc;" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="A"/>
+            <Property name="text" type="java.lang.String" value="&#xb20c;&#xb7ec;"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
@@ -131,7 +131,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="&#xad74;&#xb9bc;" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="A"/>
+            <Property name="text" type="java.lang.String" value="&#xd0a4;&#xb97c; &#xc785;&#xb825;&#xd558;&#xc138;&#xc694;."/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
@@ -409,9 +409,6 @@
       </SubComponents>
     </Container>
   </NonVisualComponents>
-  <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
-  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>

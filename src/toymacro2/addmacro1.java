@@ -42,6 +42,7 @@ public class addmacro1 extends javax.swing.JFrame {
     
     JPanel panel;
     KeyboardFocusManager manager;
+    KeyEventDispatcher dispatcher;
     
     private addmacro1(ArrayList<MacroAction> arrayList) {
         this.arrayList = arrayList;
@@ -133,6 +134,7 @@ public class addmacro1 extends javax.swing.JFrame {
                         model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), taskList.getClickPoint().get("clickX") + " ," + taskList.getClickPoint().get("clickY"), taskList.isAction()});
                     }
                     arrayList.add(taskList);
+                    
                     //******종료하는 친구다.******
                     frame.dispose();
                 }
@@ -144,36 +146,18 @@ public class addmacro1 extends javax.swing.JFrame {
     private void getKeyBoardPoint(){
         try {
             jDialog1.setVisible(true);
-            manager = null;
-            panel = null;
-            // JPanel 생성
-            panel = new JPanel() {
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                }
-            };
-            jDialog1.add(panel);
-            
-            // 키 이벤트를 받을 수 있도록 포커스 설정
-            panel.setFocusable(true); 
-            
-            panel.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    settingText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
-                    settingText2.setText(String.valueOf(e.getKeyCode()));
-                    settingText3.setText(String.valueOf(e.getKeyChar()));
-                }
-            });
+            //dispatcher 삭제하는 부분
+            if(this.manager != null){
+                this.manager.removeKeyEventDispatcher(dispatcher);
+            }
             
             //Tab키 이벤트 적용하는부분
-            manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-            manager.addKeyEventDispatcher(new KeyEventDispatcher() {
+            this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            this.dispatcher = new KeyEventDispatcher() {
                 @Override
                 public boolean dispatchKeyEvent(KeyEvent e) {
-                    // 탭 키가 눌렸는지 확인
-                    if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
+                    if(e.getKeyCode() != 0){
                         settingText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
                         settingText2.setText(String.valueOf(e.getKeyCode()));
                         settingText3.setText(String.valueOf(e.getKeyChar()));
@@ -181,7 +165,8 @@ public class addmacro1 extends javax.swing.JFrame {
                     // 다른 키 이벤트는 여기서 처리하지 않음
                     return false;
                 }
-            });
+            };
+            this.manager.addKeyEventDispatcher(dispatcher);
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -192,61 +177,37 @@ public class addmacro1 extends javax.swing.JFrame {
     }
     
     private void getMixKeyBoardPoint(String mixKeyButton){
-        manager = null;
-        panel = null;
         try {
+            if(this.manager != null){
+                this.manager.removeKeyEventDispatcher(dispatcher);
+            }
             
-            System.out.println("여 오는가" + mixKeyButton);
-            // JPanel 생성
-            panel = new JPanel() {
-                @Override
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                }
-            };
-            jDialog2.add(panel);
-            
-            // 키 이벤트를 받을 수 있도록 포커스 설정
-            panel.setFocusable(true); 
-            
-            panel.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    System.out.println("여는 오는가");
-                    if(mixKeyButton.equals("putKey1")){
-                        settingMixText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
-                        settingMixText2.setText(String.valueOf(e.getKeyCode()));
-                        settingMixText3.setText(String.valueOf(e.getKeyChar()));
-                    } else if (mixKeyButton.equals("putKey2")){
-                        settingMixText4.setText(KeyEvent.getKeyText(e.getKeyCode()));
-                        settingMixText5.setText(String.valueOf(e.getKeyCode()));
-                        settingMixText6.setText(String.valueOf(e.getKeyChar()));
-                    }
-                }
-            });
             //Tab키 이벤트 적용하는부분
-            manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-            manager.addKeyEventDispatcher(new KeyEventDispatcher() {
+            this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+            this.dispatcher = new KeyEventDispatcher() {
                 @Override
                 public boolean dispatchKeyEvent(KeyEvent e) {
-                    System.out.println("여는 오는거 같드만");
-                    
                     // 탭 키가 눌렸는지 확인
-//                    if (e.getKeyCode() == KeyEvent.VK_TAB) {
                         if(mixKeyButton.equals("putKey1")){
-                            settingMixText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
-                            settingMixText2.setText(String.valueOf(e.getKeyCode()));
-                            settingMixText3.setText(String.valueOf(e.getKeyChar()));
+                            //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
+                            if(e.getKeyCode() != 0){
+                                settingMixText1.setText(KeyEvent.getKeyText(e.getKeyCode()));
+                                settingMixText2.setText(String.valueOf(e.getKeyCode()));
+                                settingMixText3.setText(String.valueOf(e.getKeyChar()));
+                            }
                         } else if (mixKeyButton.equals("putKey2")){
-                            settingMixText4.setText(KeyEvent.getKeyText(e.getKeyCode()));
-                            settingMixText5.setText(String.valueOf(e.getKeyCode()));
-                            settingMixText6.setText(String.valueOf(e.getKeyChar()));
+                            //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
+                            if(e.getKeyCode() != 0){
+                                settingMixText4.setText(KeyEvent.getKeyText(e.getKeyCode()));
+                                settingMixText5.setText(String.valueOf(e.getKeyCode()));
+                                settingMixText6.setText(String.valueOf(e.getKeyChar()));
+                            }
                         }
-//                    }
                     // 다른 키 이벤트는 여기서 처리하지 않음
                     return true;
                 }
-            });
+            };
+            manager.addKeyEventDispatcher(dispatcher);
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -265,12 +226,25 @@ public class addmacro1 extends javax.swing.JFrame {
                 model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
             } else if (arrayList.size() > 0) {
                 taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
-                model.addRow(new Object[]{arrayList.get(arrayList.size()-1), taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+                model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
             }
             arrayList.add(taskList);
             jDialog1.dispose();
         } else if (actionType.equals("typeMulte")){
-            
+            clickPoint = new HashMap<>();
+            clickPoint.put("pressKey", Integer.parseInt(settingText2.getText()));
+            clickPoint.put("pressKeyImpormation", settingText1.getText());
+
+            if (arrayList.size() == 0) {
+                taskList = new MacroAction(1, "pressKey", clickPoint, true);
+                //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
+                model.addRow(new Object[]{1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+            } else if (arrayList.size() > 0) {
+                taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "pressKey", clickPoint, true);
+                model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), settingText1.getText() + " - " + settingText2.getText(), taskList.isAction()});
+            }
+            arrayList.add(taskList);
+            jDialog1.dispose();
         }
     }
     
@@ -285,8 +259,7 @@ public class addmacro1 extends javax.swing.JFrame {
             //실제 모델에서 삭제 만약 이게 앞으로 갈경우 index 정보를 못가져와 nullPoint 발생
             model.removeRow(jTable1.getSelectedRow());
         } catch (Exception e) {
-            //dialog 날리기
-            System.out.println(e);
+            System.err.println(e);
         }
     }
     
@@ -342,17 +315,17 @@ public class addmacro1 extends javax.swing.JFrame {
         jLabel1.setText("키보드 입력값");
 
         settingText1.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
-        settingText1.setText("A");
+        settingText1.setText("키보드를");
         settingText1.setToolTipText("");
         settingText1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         settingText2.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
-        settingText2.setText("A");
+        settingText2.setText("눌러");
         settingText2.setToolTipText("");
         settingText2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         settingText3.setFont(new java.awt.Font("굴림", 1, 24)); // NOI18N
-        settingText3.setText("A");
+        settingText3.setText("키를 입력하세요.");
         settingText3.setToolTipText("");
         settingText3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -590,8 +563,6 @@ public class addmacro1 extends javax.swing.JFrame {
                         .addGap(11, 11, 11))))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
         button1.setActionCommand("addMouseClickPoint");
         button1.setLabel("클릭지점 만들기");
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -713,6 +684,7 @@ public class addmacro1 extends javax.swing.JFrame {
             //setActionList();
         } else if (evt.getActionCommand().equals("actionSave")) {   //저장
             if(deleteRow.size() > 0){
+                //Index.class 에 ArrayList row 삭제하기
                 deleteTest.deleteRow(deleteRow);
             }
             //창닫는부분
