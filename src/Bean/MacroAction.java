@@ -14,13 +14,13 @@ import java.util.HashMap;
 public class MacroAction {
     private int indexNumber = 0;
     private String actionType = null;
-    private HashMap<Object, Object> clickPoint = new HashMap<>();
+    private HashMap<Object, Object> actionValue = new HashMap<>();
     private boolean action = true;
     
     public MacroAction(int indexNumber, String actionType, HashMap<Object, Object> clickPoint, boolean action){
         this.indexNumber = indexNumber;
         this.actionType = actionType;
-        this.clickPoint = clickPoint;
+        this.actionValue = actionValue;
         this.action = action;
     }
     
@@ -32,8 +32,8 @@ public class MacroAction {
         this.actionType = actionType;
     }
 
-    public void setClickPoint(HashMap<Object, Object> clickPoint) {
-        this.clickPoint = clickPoint;
+    public void setActionValue(HashMap<Object, Object> clickPoint) {
+        this.actionValue = clickPoint;
     }
 
     public void setAction(boolean action) {
@@ -48,8 +48,8 @@ public class MacroAction {
         return actionType;
     }
 
-    public HashMap<Object, Object> getClickPoint() {
-        return clickPoint;
+    public HashMap<Object, Object> getActionValue() {
+        return actionValue;
     }
 
     public boolean isAction() {

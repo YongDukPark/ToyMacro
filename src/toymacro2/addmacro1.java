@@ -59,7 +59,7 @@ public class addmacro1 extends javax.swing.JFrame {
     }
     
     public void defaultSetting(){
-        model.setColumnIdentifiers(new Object[]{"고유번호" ,"동작", "위치", "사용"});
+        model.setColumnIdentifiers(new Object[]{"고유번호" ,"동작유형", "동작값", "사용유무"});
         jTable1.setModel(model);
         
         //deleteRow 객체 생성부분
@@ -70,11 +70,13 @@ public class addmacro1 extends javax.swing.JFrame {
         if(arrayList.size() > 0){
             for(int i = 0 ; i < arrayList.size() ; i++){
                 if (arrayList.get(i).getActionType().equals("click")) {
-                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("clickX") + " ," + arrayList.get(i).getClickPoint().get("clickY"), arrayList.get(i).isAction()});
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getActionValue().get("clickX") + " ," + arrayList.get(i).getActionValue().get("clickY"), arrayList.get(i).isAction()});
                 } else if (arrayList.get(i).getActionType().equals("pressKey")) {
-                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressKeyImpormation") + "-" + arrayList.get(i).getClickPoint().get("pressKey"), arrayList.get(i).isAction()});
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getActionValue().get("pressKeyImpormation") + "-" + arrayList.get(i).getActionValue().get("pressKey"), arrayList.get(i).isAction()});
                 } else if (arrayList.get(i).getActionType().equals("pressMultyKey")) {
-                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getClickPoint().get("pressMultyKeyImpormation1") + "-" + arrayList.get(i).getClickPoint().get("pressMultyKey1") + " + " + arrayList.get(i).getClickPoint().get("pressMultyKeyImpormation2") + "-" + arrayList.get(i).getClickPoint().get("pressMultyKey2"), arrayList.get(i).isAction()});
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getActionValue().get("pressMultyKeyImpormation1") + "-" + arrayList.get(i).getActionValue().get("pressMultyKey1") + " + " + arrayList.get(i).getActionValue().get("pressMultyKeyImpormation2") + "-" + arrayList.get(i).getActionValue().get("pressMultyKey2"), arrayList.get(i).isAction()});
+                } else if (arrayList.get(i).getActionType().equals("delay")) {
+                    model.addRow(new Object[]{arrayList.get(i).getIndexNumber(), arrayList.get(i).getActionType(), arrayList.get(i).getActionValue().get("delayTime"), arrayList.get(i).isAction()});
                 }
             }
         }
@@ -130,10 +132,10 @@ public class addmacro1 extends javax.swing.JFrame {
                     if (arrayList.size() == 0) {
                         taskList = new MacroAction(1, "click", clickPoint, true);
                         //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
-                        model.addRow(new Object[]{1, taskList.getActionType(), taskList.getClickPoint().get("clickX") + " ," + taskList.getClickPoint().get("clickY"), taskList.isAction()});
+                        model.addRow(new Object[]{1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
                     } else if (arrayList.size() > 0) {
                         taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
-                        model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), taskList.getClickPoint().get("clickX") + " ," + taskList.getClickPoint().get("clickY"), taskList.isAction()});
+                        model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
                     }
                     arrayList.add(taskList);
                     
@@ -251,6 +253,24 @@ public class addmacro1 extends javax.swing.JFrame {
         }
     }
     
+    private void getDelayDialog(){
+        jDialog3.setVisible(true);
+    }
+    
+    private void saveDelayRow(){
+        clickPoint = new HashMap<>();
+        clickPoint.put("delayTime", Integer.parseInt(jTextField1.getText()));
+        
+        if (arrayList.size() == 0) {
+            taskList = new MacroAction(1, "delay", clickPoint, true);
+            model.addRow(new Object[]{1, taskList.getActionType(), jTextField1.getText(), taskList.isAction()});
+        } else if (arrayList.size() > 0) {
+            taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "delay", clickPoint, true);
+            model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), jTextField1.getText(), taskList.isAction()});
+        }
+        arrayList.add(taskList);
+        jDialog3.dispose();
+    }
     private void deleteRow(){
         try {
             //arrayList에서 삭제
@@ -300,6 +320,16 @@ public class addmacro1 extends javax.swing.JFrame {
         settingMixText6 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jDialog3 = new javax.swing.JDialog();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
         button1 = new java.awt.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -308,6 +338,7 @@ public class addmacro1 extends javax.swing.JFrame {
         button4 = new java.awt.Button();
         button5 = new java.awt.Button();
         button6 = new java.awt.Button();
+        button7 = new java.awt.Button();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -557,6 +588,85 @@ public class addmacro1 extends javax.swing.JFrame {
                         .addGap(11, 11, 11))))
         );
 
+        jDialog3.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog3.setMinimumSize(new java.awt.Dimension(400, 300));
+        jDialog3.setPreferredSize(new java.awt.Dimension(400, 330));
+
+        jLabel4.setText("딜레이 생성");
+
+        jLabel5.setText("유의사항");
+
+        jLabel12.setText("여기서 딜레이를 설정할경우 메인화면에서 설정된");
+
+        jLabel13.setText("Default Delay 만큼 대기하지 않고 이 지점에서는");
+
+        jLabel14.setText("하단에서 입력한 값만큼 Delay가 됩니다.");
+
+        jLabel15.setText("설정값은 1000 당 1초입니다.");
+
+        jTextField1.setFont(new java.awt.Font("굴림", 0, 18)); // NOI18N
+        jTextField1.setText("1000");
+
+        jButton5.setText("저장");
+        jButton5.setActionCommand("saveDelayRow");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)))
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel4)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
+        jDialog3.getContentPane().setLayout(jDialog3Layout);
+        jDialog3Layout.setHorizontalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jDialog3Layout.setVerticalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         button1.setActionCommand("addMouseClickPoint");
         button1.setLabel("클릭지점 만들기");
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -611,6 +721,14 @@ public class addmacro1 extends javax.swing.JFrame {
             }
         });
 
+        button7.setActionCommand("addDelay");
+        button7.setLabel("Delay 만들기");
+        button7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -624,9 +742,12 @@ public class addmacro1 extends javax.swing.JFrame {
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(270, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -635,10 +756,12 @@ public class addmacro1 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
-                        .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -664,6 +787,8 @@ public class addmacro1 extends javax.swing.JFrame {
             getKeyBoardPoint();
         } else if (evt.getActionCommand().equals("addMixKeyBoaredPoint")){  //키보드 믹스 클릭 포인트
             getMixKeyBoardDialog();
+        } else if (evt.getActionCommand().equals("addDelay")) {
+            getDelayDialog();
         } else if (evt.getActionCommand().equals("putKey1")){   //혼합키1번 설정버튼
             getMixKeyBoardPoint(evt.getActionCommand());
         } else if (evt.getActionCommand().equals("putKey2")){   //혼합키2번 설정버튼
@@ -672,6 +797,8 @@ public class addmacro1 extends javax.swing.JFrame {
             saveKeyBoardPoint("typeSingle");
         } else if (evt.getActionCommand().equals("saveMixKeyBoardPoint")){
             saveKeyBoardPoint("typeMulty");
+        } else if (evt.getActionCommand().equals("saveDelayRow")) {
+            saveDelayRow();
         } else if (evt.getActionCommand().equals("deleteRow")) {    //Row삭제
             deleteRow();
         } else if (evt.getActionCommand().equals("active")){    //적용
@@ -727,24 +854,35 @@ public class addmacro1 extends javax.swing.JFrame {
     private java.awt.Button button4;
     private java.awt.Button button5;
     private java.awt.Button button6;
+    private java.awt.Button button7;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton keyCanselButton;
     private javax.swing.JButton keyPutButton;
     private javax.swing.JLabel settingMixText1;
