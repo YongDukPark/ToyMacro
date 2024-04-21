@@ -17,7 +17,7 @@ public class MacroAction {
     private HashMap<Object, Object> actionValue = new HashMap<>();
     private boolean action = true;
     
-    public MacroAction(int indexNumber, String actionType, HashMap<Object, Object> clickPoint, boolean action){
+    public MacroAction(int indexNumber, String actionType, HashMap<Object, Object> actionValue, boolean action){
         this.indexNumber = indexNumber;
         this.actionType = actionType;
         this.actionValue = actionValue;

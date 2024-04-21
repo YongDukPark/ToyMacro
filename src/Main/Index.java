@@ -6,15 +6,19 @@
 package Main;
 
 import Bean.MacroAction;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JButton;
-import material.MousePoint;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import toymacro2.*;
 
 /**
@@ -44,6 +48,14 @@ public class Index extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        autoMouseRadio = new javax.swing.JRadioButton();
+        macroRadio = new javax.swing.JRadioButton();
+        jTextField2 = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,8 +63,9 @@ public class Index extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PMacro");
 
-        jButton1.setText("기능만들기");
+        jButton1.setText("매크로만들기");
         jButton1.setActionCommand("Add");
+        jButton1.setFocusable(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonClickEvent(evt);
@@ -61,6 +74,7 @@ public class Index extends javax.swing.JFrame {
 
         jButton2.setText("실행");
         jButton2.setActionCommand("macroAction");
+        jButton2.setFocusable(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonClickEvent(evt);
@@ -81,20 +95,53 @@ public class Index extends javax.swing.JFrame {
 
         jLabel7.setText("ex 1000 > 1초");
 
+        autoMouseRadio.setText("오토마우스");
+        autoMouseRadio.setActionCommand("autoMouseCheck");
+        autoMouseRadio.setFocusable(false);
+        autoMouseRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkRadio(evt);
+            }
+        });
+
+        macroRadio.setText("매크로");
+        macroRadio.setActionCommand("macroCheck");
+        macroRadio.setFocusable(false);
+        macroRadio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkRadio(evt);
+            }
+        });
+
+        jTextField2.setText("반복횟수");
+        jTextField2.setToolTipText("");
+        jTextField2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clickTextField(evt);
+            }
+        });
+
+        jCheckBox1.setText("무한");
+        jCheckBox1.setActionCommand("infiniteLoop");
+        jCheckBox1.setFocusable(false);
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxAction(evt);
+            }
+        });
+
+        jLabel8.setText("Macro를 사용시");
+
+        jLabel9.setText("오토마우스는 클릭간격을 지정");
+
+        jLabel10.setText("2초후 기능이");
+
+        jLabel11.setText("시작됩니다.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 34, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,42 +153,84 @@ public class Index extends javax.swing.JFrame {
                         .addGap(23, 23, 23))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)))
                             .addComponent(jLabel7))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(macroRadio)
+                            .addComponent(autoMouseRadio))
+                        .addGap(8, 8, 8)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9))
+                        .addGap(0, 89, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addGap(4, 4, 4)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBox1))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(autoMouseRadio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(macroRadio)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel5)
+                        .addGap(7, 7, 7)
+                        .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addGap(5, 5, 5)
                 .addComponent(jLabel7)
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4))
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -163,45 +252,128 @@ public class Index extends javax.swing.JFrame {
         if(evt.getActionCommand().equals("Add")){   //실행창 띄우기
             addmacro1.getInstance(arrayList);
             System.out.println(arrayList.size());
-            
         } else if (evt.getActionCommand().equals("macroAction")){   //매크로 액션
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
-            int screenResolution = toolkit.getScreenResolution();
-            int mousePointX = 0;
-            int mousePointY = 0;
-            
             try {
-                Robot r = new Robot();
-                
-                //매크로 실행되는 구간
-                for (int i = 0; i < arrayList.size(); i++) {
-                    if(arrayList.get(i).getActionType().equals("click")){
-                        //화면 고려
-                        mousePointX = (int) ((int)arrayList.get(i).getActionValue().get("clickX") * 0.5 * (96.0 / screenResolution));
-                        mousePointY = (int) ((int)arrayList.get(i).getActionValue().get("clickY") * 0.5 * (96.0 / screenResolution));
-                        
-                        //마우스 이동하는 부분
-                        r.mouseMove(0, 0);
-                        r.mouseMove((int)arrayList.get(i).getActionValue().get("clickX"), (int)arrayList.get(i).getActionValue().get("clickY"));
-                        
-                        // 마우스 클릭하는부분
-                        r.mousePress(InputEvent.BUTTON1_MASK);
-                        r.mouseRelease(InputEvent.BUTTON1_MASK);
-                    } else if (arrayList.get(i).getActionType().equals("pressKey")){
-                        r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressKey"))));
-                        r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressKey"))));
-                    } else if (arrayList.get(i).getActionType().equals("pressMultyKey")) {
-                        r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey1"))));
-                        r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey2"))));
-                        r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey2"))));
-                        r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey1"))));
+                JPanel panel = new JPanel() {
+                @Override
+                public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
                     }
-                    //delay Row가 있을경우 대기하는 시간
-                    if(arrayList.get(i).getActionType().equals("delay")){
-                        r.delay(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("delayTime"))));
-                    } else {
-                        r.delay(Integer.parseInt(String.valueOf(jTextField1.getText())));
+                };
+                JPanel dummyPanel = new JPanel() {
+                @Override
+                public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                    }
+                };
+                //전체해상도 구하기
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
+                int screenResolution = toolkit.getScreenResolution();
+                int centerX = (int) (res.width * 0.5 * (96.0 / screenResolution));
+                int centerY = (int) (res.height * 0.5 * (96.0 / screenResolution));
+                
+                JFrame frame = new JFrame("Click Coordinates Example");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                JFrame dummyFrame = new JFrame("Click Coordinates Example");
+                dummyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                frame.add(panel);
+                dummyFrame.add(dummyPanel);
+
+                //화면색상 바꿔줄 영역 지정
+                frame.setSize(res.width, res.height);
+                dummyFrame.setSize(res.width, res.height);
+
+                //화면 반투명한 회색으로 바꿔주는 line
+                frame.setUndecorated(true);
+                frame.setBackground(new Color(0,0,0,122));
+                dummyFrame.setUndecorated(true);
+                dummyFrame.setBackground(new Color(0,0,0,0));
+                panel.setBackground(new Color(0,0,0,122));
+                dummyPanel.setBackground(new Color(0,0,0,0));
+                
+                JLabel label = new JLabel();
+                if(autoMouseRadio.isSelected()){
+                    label.setText("..Auto Mouse 2 Seconds");
+                } else if (macroRadio.isSelected()){
+                    label.setText("..Macro 2 Seconds");
+                } else {
+                    label.setText("..Doing nothing");
+                }
+                
+                label.setFont(new Font("Arial", Font.PLAIN, 150));
+                label.setForeground(Color.WHITE);
+                dummyPanel.setLayout(new BorderLayout());
+                dummyPanel.add(label, BorderLayout.CENTER);
+                
+                frame.setVisible(true);
+                dummyFrame.setVisible(true);
+                
+                Robot r = new Robot();
+                //시작전 딜레이
+                r.delay(1000);
+                dummyFrame.setVisible(false);
+                if(autoMouseRadio.isSelected()){
+                    label.setText(".Auto Mouse 1 Seconds");
+                } else if (macroRadio.isSelected()){
+                    label.setText(".Macro 1 Seconds");
+                } else {
+                    label.setText(".Doing nothing");
+                }
+                dummyFrame.setVisible(true);
+                r.delay(1000);
+                frame.setVisible(false);
+                dummyFrame.setVisible(false);
+                
+                if (autoMouseRadio.isSelected()) {
+                    if(!jCheckBox1.isSelected()){
+                        for (int i = 0 ; i < Integer.parseInt(jTextField2.getText()) ; i++) {
+                            r.mousePress(InputEvent.BUTTON1_MASK);
+                            r.mouseRelease(InputEvent.BUTTON1_MASK);
+                            r.delay(Integer.parseInt(jTextField1.getText()));
+                        }
+                    }
+                } else if (macroRadio.isSelected()) {
+//                    Toolkit toolkit = Toolkit.getDefaultToolkit();
+//                    Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
+//                    int screenResolution = toolkit.getScreenResolution();
+                    int mousePointX = 0;
+                    int mousePointY = 0;
+
+                    try {
+                        //매크로 실행되는 구간
+                        for (int i = 0; i < arrayList.size(); i++) {
+                            if(arrayList.get(i).getActionType().equals("click")){
+                                //화면 고려
+                                mousePointX = (int) ((int)arrayList.get(i).getActionValue().get("clickX") * 0.5 * (96.0 / screenResolution));
+                                mousePointY = (int) ((int)arrayList.get(i).getActionValue().get("clickY") * 0.5 * (96.0 / screenResolution));
+
+                                //마우스 이동하는 부분
+                                r.mouseMove(0, 0);
+                                r.mouseMove((int)arrayList.get(i).getActionValue().get("clickX"), (int)arrayList.get(i).getActionValue().get("clickY"));
+
+                                // 마우스 클릭하는부분
+                                r.mousePress(InputEvent.BUTTON1_MASK);
+                                r.mouseRelease(InputEvent.BUTTON1_MASK);
+                            } else if (arrayList.get(i).getActionType().equals("pressKey")){
+                                r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressKey"))));
+                                r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressKey"))));
+                            } else if (arrayList.get(i).getActionType().equals("pressMultyKey")) {
+                                r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey1"))));
+                                r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey2"))));
+                                r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey2"))));
+                                r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey1"))));
+                            }
+                            //delay Row가 있을경우 대기하는 시간
+                            if(arrayList.get(i).getActionType().equals("delay")){
+                                r.delay(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("delayTime"))));
+                            } else {
+                                r.delay(Integer.parseInt(String.valueOf(jTextField1.getText())));
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.err.println(e);
                     }
                 }
             } catch (Exception e) {
@@ -209,6 +381,39 @@ public class Index extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_buttonClickEvent
+
+    private void checkRadio(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRadio
+        if (evt.getActionCommand().equals("autoMouseCheck")) {
+            if (macroRadio.isSelected()) {
+                macroRadio.setSelected(false);
+            }
+        } else if (evt.getActionCommand().equals("macroCheck")) {
+            if (autoMouseRadio.isSelected()) {
+                autoMouseRadio.setSelected(false);
+            }
+        }
+    }//GEN-LAST:event_checkRadio
+
+    private void checkBoxAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxAction
+        if (evt.getActionCommand().equals("infiniteLoop")) {
+            if (jCheckBox1.isSelected()) {
+                jTextField2.setEditable(false);
+                jTextField2.setBackground(Color.gray);
+            } else if (!jCheckBox1.isSelected()) {
+                jTextField2.setEditable(true);
+                jTextField2.setBackground(Color.WHITE);
+            }
+        }
+    }//GEN-LAST:event_checkBoxAction
+
+    private void clickTextField(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clickTextField
+        //컴포넌트가 jTextField2이고 텍스트가 반복횟수만 적혀있으면 텍스트필드 clear
+        if(evt.getComponent() == jTextField2){
+            if(jTextField2.getText().equals("반복횟수")){
+                jTextField2.setText("");
+            }
+        }
+    }//GEN-LAST:event_clickTextField
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -244,15 +449,23 @@ public class Index extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton autoMouseRadio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JRadioButton macroRadio;
     // End of variables declaration//GEN-END:variables
 }
