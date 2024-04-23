@@ -11,9 +11,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
@@ -29,6 +32,11 @@ public class Index extends javax.swing.JFrame {
     
     HashMap<Object, Object> mouseClickPoint = new HashMap<>();
     ArrayList<MacroAction> arrayList = new ArrayList<>();
+    
+    KeyboardFocusManager manager;
+    KeyEventDispatcher dispatcher;
+    
+    boolean testCheck = true;
     
     public Index() {
         initComponents();
@@ -326,6 +334,23 @@ public class Index extends javax.swing.JFrame {
                 frame.setVisible(false);
                 dummyFrame.setVisible(false);
                 
+                this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                this.dispatcher = new KeyEventDispatcher() {
+                    @Override
+                    public boolean dispatchKeyEvent(KeyEvent e) {
+                        //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
+
+                        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                            System.out.println("여기는 오냐");
+                            testCheck = false;
+                            
+                        }
+                        // 다른 키 이벤트는 여기서 처리하지 않음
+                        return false;
+                    }
+                };
+                this.manager.addKeyEventDispatcher(dispatcher);
+                
                 if (autoMouseRadio.isSelected()) {
                     if(!jCheckBox1.isSelected()){
                         for (int i = 0 ; i < Integer.parseInt(jTextField2.getText()) ; i++) {
@@ -371,10 +396,57 @@ public class Index extends javax.swing.JFrame {
                             } else {
                                 r.delay(Integer.parseInt(String.valueOf(jTextField1.getText())));
                             }
+                            
+                            if(!testCheck){
+                                System.out.println("이거안되면 끝임");
+                                break;
+                            }
                         }
                     } catch (Exception e) {
                         System.err.println(e);
                     }
+                } else {
+                    TESTS bInstance = new TESTS(); // B 클래스의 인스턴스 생성
+
+                    Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
+                    thread.start(); // 쓰레드 시작
+                    
+//                    this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+//                    this.dispatcher = new KeyEventDispatcher() {
+//                        @Override
+//                        public boolean dispatchKeyEvent(KeyEvent e) {
+//                            //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
+//
+//                            if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+//                                System.out.println("여기는 오냐");
+//                                testCheck = false;
+//                                bInstance.stopThread();
+//                            }
+//                            // 다른 키 이벤트는 여기서 처리하지 않음
+//                            return false;
+//                        }
+//                    };
+//                    this.manager.addKeyEventDispatcher(dispatcher);
+                    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(e -> {
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // ESC 키가 눌렸을 때
+                System.out.println("ESC 키가 눌렸습니다. 쓰레드를 종료합니다.");
+                bInstance.stopThread(); // 쓰레드 종료
+            }
+            return false;
+        });
+                    
+                    // 다른 작업 수행 가능
+//                    for (int i = 0; i < 5; i++) {
+//                        System.out.println("A 클래스에서 다른 작업 수행 중: " + i);
+//                        try {
+//                            Thread.sleep(1000); // 1초 딜레이
+//                            if(i == 3){
+//                                bInstance.stopThread(); // 쓰레드 종료
+//                            }
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
                 }
             } catch (Exception e) {
                 System.err.println(e);
