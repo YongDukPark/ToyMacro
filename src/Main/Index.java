@@ -6,6 +6,8 @@
 package Main;
 
 import Bean.MacroAction;
+import MACROACTIONTHREAD.AutoMouseActionThread;
+import MACROACTIONTHREAD.MacroActionThread;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,8 +17,9 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
@@ -259,201 +262,155 @@ public class Index extends javax.swing.JFrame {
     private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
         if(evt.getActionCommand().equals("Add")){   //실행창 띄우기
             addmacro1.getInstance(arrayList);
-            System.out.println(arrayList.size());
         } else if (evt.getActionCommand().equals("macroAction")){   //매크로 액션
+            //화면 시작지점 만들기
+            startStandBy();
+            
+            System.out.println(getSize());
+            setVisible(false);
+            //setUndecorated(true);
             try {
-                JPanel panel = new JPanel() {
-                @Override
-                public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                    }
-                };
-                JPanel dummyPanel = new JPanel() {
-                @Override
-                public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                    }
-                };
-                //전체해상도 구하기
-                Toolkit toolkit = Toolkit.getDefaultToolkit();
-                Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
-                int screenResolution = toolkit.getScreenResolution();
-                int centerX = (int) (res.width * 0.5 * (96.0 / screenResolution));
-                int centerY = (int) (res.height * 0.5 * (96.0 / screenResolution));
-                
-                JFrame frame = new JFrame("Click Coordinates Example");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                JFrame dummyFrame = new JFrame("Click Coordinates Example");
-                dummyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-                frame.add(panel);
-                dummyFrame.add(dummyPanel);
-
-                //화면색상 바꿔줄 영역 지정
-                frame.setSize(res.width, res.height);
-                dummyFrame.setSize(res.width, res.height);
-
-                //화면 반투명한 회색으로 바꿔주는 line
-                frame.setUndecorated(true);
-                frame.setBackground(new Color(0,0,0,122));
-                dummyFrame.setUndecorated(true);
-                dummyFrame.setBackground(new Color(0,0,0,0));
-                panel.setBackground(new Color(0,0,0,122));
-                dummyPanel.setBackground(new Color(0,0,0,0));
-                
-                JLabel label = new JLabel();
-                if(autoMouseRadio.isSelected()){
-                    label.setText("..Auto Mouse 2 Seconds");
-                } else if (macroRadio.isSelected()){
-                    label.setText("..Macro 2 Seconds");
-                } else {
-                    label.setText("..Doing nothing");
-                }
-                
-                label.setFont(new Font("Arial", Font.PLAIN, 150));
-                label.setForeground(Color.WHITE);
-                dummyPanel.setLayout(new BorderLayout());
-                dummyPanel.add(label, BorderLayout.CENTER);
-                
-                frame.setVisible(true);
-                dummyFrame.setVisible(true);
-                
-                Robot r = new Robot();
-                //시작전 딜레이
-                r.delay(1000);
-                dummyFrame.setVisible(false);
-                if(autoMouseRadio.isSelected()){
-                    label.setText(".Auto Mouse 1 Seconds");
-                } else if (macroRadio.isSelected()){
-                    label.setText(".Macro 1 Seconds");
-                } else {
-                    label.setText(".Doing nothing");
-                }
-                dummyFrame.setVisible(true);
-                r.delay(1000);
-                frame.setVisible(false);
-                dummyFrame.setVisible(false);
-                
-                this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-                this.dispatcher = new KeyEventDispatcher() {
-                    @Override
-                    public boolean dispatchKeyEvent(KeyEvent e) {
-                        //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
-
-                        if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-                            System.out.println("여기는 오냐");
-                            testCheck = false;
-                            
-                        }
-                        // 다른 키 이벤트는 여기서 처리하지 않음
-                        return false;
-                    }
-                };
-                this.manager.addKeyEventDispatcher(dispatcher);
-                
                 if (autoMouseRadio.isSelected()) {
-                    if(!jCheckBox1.isSelected()){
-                        for (int i = 0 ; i < Integer.parseInt(jTextField2.getText()) ; i++) {
-                            r.mousePress(InputEvent.BUTTON1_MASK);
-                            r.mouseRelease(InputEvent.BUTTON1_MASK);
-                            r.delay(Integer.parseInt(jTextField1.getText()));
-                        }
-                    }
-                } else if (macroRadio.isSelected()) {
-//                    Toolkit toolkit = Toolkit.getDefaultToolkit();
-//                    Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
-//                    int screenResolution = toolkit.getScreenResolution();
-                    int mousePointX = 0;
-                    int mousePointY = 0;
-
-                    try {
-                        //매크로 실행되는 구간
-                        for (int i = 0; i < arrayList.size(); i++) {
-                            if(arrayList.get(i).getActionType().equals("click")){
-                                //화면 고려
-                                mousePointX = (int) ((int)arrayList.get(i).getActionValue().get("clickX") * 0.5 * (96.0 / screenResolution));
-                                mousePointY = (int) ((int)arrayList.get(i).getActionValue().get("clickY") * 0.5 * (96.0 / screenResolution));
-
-                                //마우스 이동하는 부분
-                                r.mouseMove(0, 0);
-                                r.mouseMove((int)arrayList.get(i).getActionValue().get("clickX"), (int)arrayList.get(i).getActionValue().get("clickY"));
-
-                                // 마우스 클릭하는부분
-                                r.mousePress(InputEvent.BUTTON1_MASK);
-                                r.mouseRelease(InputEvent.BUTTON1_MASK);
-                            } else if (arrayList.get(i).getActionType().equals("pressKey")){
-                                r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressKey"))));
-                                r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressKey"))));
-                            } else if (arrayList.get(i).getActionType().equals("pressMultyKey")) {
-                                r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey1"))));
-                                r.keyPress(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey2"))));
-                                r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey2"))));
-                                r.keyRelease(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("pressMultyKey1"))));
-                            }
-                            //delay Row가 있을경우 대기하는 시간
-                            if(arrayList.get(i).getActionType().equals("delay")){
-                                r.delay(Integer.parseInt(String.valueOf(arrayList.get(i).getActionValue().get("delayTime"))));
-                            } else {
-                                r.delay(Integer.parseInt(String.valueOf(jTextField1.getText())));
-                            }
-                            
-                            if(!testCheck){
-                                System.out.println("이거안되면 끝임");
-                                break;
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.err.println(e);
-                    }
-                } else {
-                    TESTS bInstance = new TESTS(); // B 클래스의 인스턴스 생성
-
+                    //쓰레드 객체 생성 및 실행부분
+                    AutoMouseActionThread bInstance = new AutoMouseActionThread(Integer.parseInt(jTextField2.getText()), Integer.parseInt(jTextField1.getText()), jCheckBox1.isSelected());
                     Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
+                    
                     thread.start(); // 쓰레드 시작
                     
-//                    this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-//                    this.dispatcher = new KeyEventDispatcher() {
-//                        @Override
-//                        public boolean dispatchKeyEvent(KeyEvent e) {
-//                            //keyCode가 0일경우 set 안함 알수없음 안보이게 하기위한 조건문
-//
-//                            if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
-//                                System.out.println("여기는 오냐");
-//                                testCheck = false;
-//                                bInstance.stopThread();
-//                            }
-//                            // 다른 키 이벤트는 여기서 처리하지 않음
-//                            return false;
-//                        }
-//                    };
-//                    this.manager.addKeyEventDispatcher(dispatcher);
-                    KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(e -> {
-            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // ESC 키가 눌렸을 때
-                System.out.println("ESC 키가 눌렸습니다. 쓰레드를 종료합니다.");
-                bInstance.stopThread(); // 쓰레드 종료
-            }
-            return false;
-        });
+                    this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                    this.dispatcher = new KeyEventDispatcher() {
+                        @Override
+                        public boolean dispatchKeyEvent(KeyEvent e) {
+                            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // ESC 키가 눌렸을 때
+                                System.out.println("ESC 키가 눌렸습니다. 쓰레드를 종료합니다.");
+                                bInstance.stopThread(); // 쓰레드 종료
+                                //setSize(428, 353);
+                                setVisible(true);
+                            }
+                            return false;
+                        }
+                    };
+                    manager.addKeyEventDispatcher(dispatcher);
+                } else if (macroRadio.isSelected()) {
+                    MacroActionThread bInstance = new MacroActionThread(arrayList, Integer.parseInt(jTextField1.getText()));
+                    Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
                     
-                    // 다른 작업 수행 가능
-//                    for (int i = 0; i < 5; i++) {
-//                        System.out.println("A 클래스에서 다른 작업 수행 중: " + i);
-//                        try {
-//                            Thread.sleep(1000); // 1초 딜레이
-//                            if(i == 3){
-//                                bInstance.stopThread(); // 쓰레드 종료
-//                            }
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
+                    thread.start(); // 쓰레드 시작
+                    
+                    this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+                    this.dispatcher = new KeyEventDispatcher() {
+                        @Override
+                        public boolean dispatchKeyEvent(KeyEvent e) {
+                            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // ESC 키가 눌렸을 때
+                                System.out.println("ESC 키가 눌렸습니다. 쓰레드를 종료합니다.");
+                                bInstance.stopThread(); // 쓰레드 종료
+                                setVisible(true);
+                            }
+                            return false;
+                        }
+                    };
+                    manager.addKeyEventDispatcher(dispatcher);
                 }
+                addWindowFocusListener(new WindowFocusListener() {
+                        @Override
+                        public void windowGainedFocus(WindowEvent e) {
+                            // 포커스를 다시 요청
+                            requestFocus();
+                            setVisible(false);
+                        }
+
+                        @Override
+                        public void windowLostFocus(WindowEvent e) {
+                            // 포커스를 다시 요청
+                            requestFocus();
+                            setVisible(false);
+                        }
+                    });
+                
+                
             } catch (Exception e) {
                 System.err.println(e);
+            } finally {
+                setVisible(true);
             }
         }
     }//GEN-LAST:event_buttonClickEvent
+    
+    private void startStandBy(){
+        try {
+            JPanel panel = new JPanel() {
+                @Override
+                public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                }
+            };
+            JPanel dummyPanel = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                }
+            };
+            //전체해상도 구하기
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            Dimension res = Toolkit.getDefaultToolkit().getScreenSize();
+            int screenResolution = toolkit.getScreenResolution();
 
+            JFrame frame = new JFrame("Click Coordinates Example");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JFrame dummyFrame = new JFrame("Click Coordinates Example");
+            dummyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            frame.add(panel);
+            dummyFrame.add(dummyPanel);
+
+            //화면색상 바꿔줄 영역 지정
+            frame.setSize(res.width, res.height);
+            dummyFrame.setSize(res.width, res.height);
+
+            //화면 반투명한 회색으로 바꿔주는 line
+            frame.setUndecorated(true);
+            frame.setBackground(new Color(0,0,0,122));
+            dummyFrame.setUndecorated(true);
+            dummyFrame.setBackground(new Color(0,0,0,0));
+            panel.setBackground(new Color(0,0,0,122));
+            dummyPanel.setBackground(new Color(0,0,0,0));
+
+            JLabel label = new JLabel();
+            if(autoMouseRadio.isSelected()){
+                label.setText("..Auto Mouse 2 Seconds");
+            } else if (macroRadio.isSelected()){
+                label.setText("..Macro 2 Seconds");
+            } else {
+                label.setText("..Doing nothing");
+            }
+
+            label.setFont(new Font("Arial", Font.PLAIN, 150));
+            label.setForeground(Color.WHITE);
+            dummyPanel.setLayout(new BorderLayout());
+            dummyPanel.add(label, BorderLayout.CENTER);
+
+            frame.setVisible(true);
+            dummyFrame.setVisible(true);
+
+            Robot r = new Robot();
+            //시작전 딜레이
+            r.delay(1000);
+            dummyFrame.setVisible(false);
+            if(autoMouseRadio.isSelected()){
+                label.setText(".Auto Mouse 1 Seconds");
+            } else if (macroRadio.isSelected()){
+                label.setText(".Macro 1 Seconds");
+            } else {
+                label.setText(".Doing nothing");
+            }
+            dummyFrame.setVisible(true);
+            r.delay(1000);
+            frame.setVisible(false);
+            dummyFrame.setVisible(false);
+        } catch (Exception e) {
+        }
+    }
+    
     private void checkRadio(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkRadio
         if (evt.getActionCommand().equals("autoMouseCheck")) {
             if (macroRadio.isSelected()) {
@@ -540,4 +497,4 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JRadioButton macroRadio;
     // End of variables declaration//GEN-END:variables
-}
+}                                                                                             
