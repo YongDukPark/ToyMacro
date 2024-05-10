@@ -267,16 +267,28 @@ public class Index extends javax.swing.JFrame {
             startStandBy();
             
             System.out.println(getSize());
-            setVisible(false);
+            //setVisible(false);
             //setUndecorated(true);
+            addWindowFocusListener(new WindowFocusListener() {
+                        @Override
+                        public void windowGainedFocus(WindowEvent e) {
+                            // 포커스를 다시 요청
+//                            requestFocus();
+//                            setVisible(true);
+                        }
+
+                        @Override
+                        public void windowLostFocus(WindowEvent e) {
+                            // 포커스를 다시 요청
+//                            requestFocus();
+//                            setVisible(true);
+                        }
+            });
             try {
                 if (autoMouseRadio.isSelected()) {
                     //쓰레드 객체 생성 및 실행부분
                     AutoMouseActionThread bInstance = new AutoMouseActionThread(Integer.parseInt(jTextField2.getText()), Integer.parseInt(jTextField1.getText()), jCheckBox1.isSelected());
                     Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
-                    
-                    thread.start(); // 쓰레드 시작
-                    
                     this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
                     this.dispatcher = new KeyEventDispatcher() {
                         @Override
@@ -291,12 +303,22 @@ public class Index extends javax.swing.JFrame {
                         }
                     };
                     manager.addKeyEventDispatcher(dispatcher);
+                    thread.start(); // 쓰레드 시작
+                    
+                    
+                    
+                    thread.join();
+//                    setVisible(true);
+                    
+//                    while (thread.isAlive()){
+//                        //setVisible(true);
+//                        System.out.println(thread.isAlive());
+//                        setVisible(true);
+//                    }
+                    
                 } else if (macroRadio.isSelected()) {
                     MacroActionThread bInstance = new MacroActionThread(arrayList, Integer.parseInt(jTextField1.getText()));
                     Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
-                    
-                    thread.start(); // 쓰레드 시작
-                    
                     this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
                     this.dispatcher = new KeyEventDispatcher() {
                         @Override
@@ -310,29 +332,19 @@ public class Index extends javax.swing.JFrame {
                         }
                     };
                     manager.addKeyEventDispatcher(dispatcher);
+                    thread.start(); // 쓰레드 시작
+                    
+                    
                 }
-                addWindowFocusListener(new WindowFocusListener() {
-                        @Override
-                        public void windowGainedFocus(WindowEvent e) {
-                            // 포커스를 다시 요청
-                            requestFocus();
-                            setVisible(false);
-                        }
-
-                        @Override
-                        public void windowLostFocus(WindowEvent e) {
-                            // 포커스를 다시 요청
-                            requestFocus();
-                            setVisible(false);
-                        }
-                    });
-                
-                
             } catch (Exception e) {
                 System.err.println(e);
             } finally {
                 setVisible(true);
             }
+            WindowFocusListener[] listeners = getWindowFocusListeners();
+            for (WindowFocusListener listener : listeners) {
+                removeWindowFocusListener(listener);
+}
         }
     }//GEN-LAST:event_buttonClickEvent
     

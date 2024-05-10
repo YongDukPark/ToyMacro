@@ -81,6 +81,8 @@ public class MacroActionThread  implements Runnable{
             }
         } catch (Exception e) {
             System.err.println(e);
+        } finally {
+            //Index indexSetVisible = new Index();
         }
     }
     public void stopThread() {
