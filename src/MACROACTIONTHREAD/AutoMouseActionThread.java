@@ -8,6 +8,7 @@ package MACROACTIONTHREAD;
 import Main.Index;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.awt.event.WindowFocusListener;
 
 /**
  *
@@ -19,7 +20,6 @@ public class AutoMouseActionThread  implements Runnable{
     int actionDelay = 0;
     boolean actionType = false; //true일경우 무한, false일경우 일정 횟수만
     int cnt = 0;
-    
     
     public AutoMouseActionThread(int actionCount, int actionDelay, boolean actionType){
         this.actionCount = actionCount;
@@ -52,13 +52,17 @@ public class AutoMouseActionThread  implements Runnable{
                     cnt++;
                     if(cnt >= actionCount){
                         break;
+                        
                     }
                 }
             }
+            //esc를 눌러 화면을 정상으로 돌리는 로직
+            Thread.sleep(300);
+            r.keyPress(27);
+            r.keyRelease(27);
         } catch (Exception e) {
             System.err.println(e);
         } finally {
-            //Index indexSetVisible = new Index();
         }
     }
     public void stopThread() {

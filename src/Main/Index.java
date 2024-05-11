@@ -265,30 +265,33 @@ public class Index extends javax.swing.JFrame {
         } else if (evt.getActionCommand().equals("macroAction")){   //매크로 액션
             //화면 시작지점 만들기
             startStandBy();
-            
+            setSize(0,0);
             System.out.println(getSize());
-            //setVisible(false);
-            //setUndecorated(true);
+            
             addWindowFocusListener(new WindowFocusListener() {
-                        @Override
-                        public void windowGainedFocus(WindowEvent e) {
-                            // 포커스를 다시 요청
-//                            requestFocus();
-//                            setVisible(true);
-                        }
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+                    // 포커스를 다시 요청
+                    requestFocus();
+                    setVisible(true);
+                }
 
-                        @Override
-                        public void windowLostFocus(WindowEvent e) {
-                            // 포커스를 다시 요청
-//                            requestFocus();
-//                            setVisible(true);
-                        }
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    // 포커스를 다시 요청
+                    requestFocus();
+                    setVisible(true);
+                }
             });
             try {
                 if (autoMouseRadio.isSelected()) {
+                    
                     //쓰레드 객체 생성 및 실행부분
                     AutoMouseActionThread bInstance = new AutoMouseActionThread(Integer.parseInt(jTextField2.getText()), Integer.parseInt(jTextField1.getText()), jCheckBox1.isSelected());
                     Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
+                    
+                    thread.start(); // 쓰레드 시작
+                    
                     this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
                     this.dispatcher = new KeyEventDispatcher() {
                         @Override
@@ -296,29 +299,42 @@ public class Index extends javax.swing.JFrame {
                             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // ESC 키가 눌렸을 때
                                 System.out.println("ESC 키가 눌렸습니다. 쓰레드를 종료합니다.");
                                 bInstance.stopThread(); // 쓰레드 종료
-                                //setSize(428, 353);
+                                setSize(428, 353);
                                 setVisible(true);
+                                WindowFocusListener[] listeners = getWindowFocusListeners();
+                                for (WindowFocusListener listener : listeners) {
+                                    removeWindowFocusListener(listener);
+                                }
                             }
                             return false;
                         }
                     };
                     manager.addKeyEventDispatcher(dispatcher);
-                    thread.start(); // 쓰레드 시작
                     
-                    
-                    
-                    thread.join();
-//                    setVisible(true);
-                    
-//                    while (thread.isAlive()){
-//                        //setVisible(true);
-//                        System.out.println(thread.isAlive());
-//                        setVisible(true);
+                    //Thread 상태 확인해서 다음 코드로 넘어가지 않게 하는부분 이후 처리해야할 작업을 수행한다.
+//                    while(true){
+//                        if(thread.isAlive()){
+//                            System.out.println(thread.isAlive());
+//                        } else if (!thread.isAlive()){
+//                            System.out.println(thread.isAlive());
+//                            deleteEvent();
+//                            break;
+//                        }
 //                    }
-                    
+                    //위에서 생성한 포커스를 지속적으로 잡아주는 이벤트를 제거
+//                    if (!thread.isAlive()){
+//                        WindowFocusListener[] listeners = getWindowFocusListeners();
+//                        for (WindowFocusListener listener : listeners) {
+//                            removeWindowFocusListener(listener);
+//                        }
+//                    }
+//                    setSize(428, 353);
+                    setVisible(true);
                 } else if (macroRadio.isSelected()) {
                     MacroActionThread bInstance = new MacroActionThread(arrayList, Integer.parseInt(jTextField1.getText()));
                     Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성
+                    
+                    thread.start(); // 쓰레드 시작
                     this.manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
                     this.dispatcher = new KeyEventDispatcher() {
                         @Override
@@ -326,28 +342,25 @@ public class Index extends javax.swing.JFrame {
                             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) { // ESC 키가 눌렸을 때
                                 System.out.println("ESC 키가 눌렸습니다. 쓰레드를 종료합니다.");
                                 bInstance.stopThread(); // 쓰레드 종료
+                                setSize(428, 353);
                                 setVisible(true);
+                                WindowFocusListener[] listeners = getWindowFocusListeners();
+                                for (WindowFocusListener listener : listeners) {
+                                    removeWindowFocusListener(listener);
+                                }
                             }
                             return false;
                         }
                     };
                     manager.addKeyEventDispatcher(dispatcher);
-                    thread.start(); // 쓰레드 시작
-                    
-                    
                 }
             } catch (Exception e) {
                 System.err.println(e);
             } finally {
                 setVisible(true);
             }
-            WindowFocusListener[] listeners = getWindowFocusListeners();
-            for (WindowFocusListener listener : listeners) {
-                removeWindowFocusListener(listener);
-}
         }
     }//GEN-LAST:event_buttonClickEvent
-    
     private void startStandBy(){
         try {
             JPanel panel = new JPanel() {

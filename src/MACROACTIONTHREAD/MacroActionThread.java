@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 
 /**
@@ -79,10 +80,13 @@ public class MacroActionThread  implements Runnable{
                     break;
                 }
             }
+            //esc를 눌러 화면을 정상으로 돌리는 로직
+            Thread.sleep(300);
+            r.keyPress(27);
+            r.keyRelease(27);
         } catch (Exception e) {
             System.err.println(e);
         } finally {
-            //Index indexSetVisible = new Index();
         }
     }
     public void stopThread() {
