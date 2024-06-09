@@ -266,7 +266,7 @@ public class Index extends javax.swing.JFrame {
             //화면 시작지점 만들기
             startStandBy();
             setSize(0,0);
-            System.out.println(getSize());
+//            System.out.println(getSize());
             
             addWindowFocusListener(new WindowFocusListener() {
                 @Override
@@ -310,26 +310,6 @@ public class Index extends javax.swing.JFrame {
                         }
                     };
                     manager.addKeyEventDispatcher(dispatcher);
-                    
-                    //Thread 상태 확인해서 다음 코드로 넘어가지 않게 하는부분 이후 처리해야할 작업을 수행한다.
-//                    while(true){
-//                        if(thread.isAlive()){
-//                            System.out.println(thread.isAlive());
-//                        } else if (!thread.isAlive()){
-//                            System.out.println(thread.isAlive());
-//                            deleteEvent();
-//                            break;
-//                        }
-//                    }
-                    //위에서 생성한 포커스를 지속적으로 잡아주는 이벤트를 제거
-//                    if (!thread.isAlive()){
-//                        WindowFocusListener[] listeners = getWindowFocusListeners();
-//                        for (WindowFocusListener listener : listeners) {
-//                            removeWindowFocusListener(listener);
-//                        }
-//                    }
-//                    setSize(428, 353);
-                    setVisible(true);
                 } else if (macroRadio.isSelected()) {
                     MacroActionThread bInstance = new MacroActionThread(arrayList, Integer.parseInt(jTextField1.getText()));
                     Thread thread = new Thread(bInstance); // B 클래스의 인스턴스를 사용하여 쓰레드 생성

@@ -44,6 +44,9 @@ public class addmacro1 extends javax.swing.JFrame {
     KeyboardFocusManager manager;
     KeyEventDispatcher dispatcher;
     
+    boolean selectIndexType = false;
+    int addEventInex = 0;
+    
     private addmacro1(ArrayList<MacroAction> arrayList) {
         this.arrayList = arrayList;
         initComponents();
@@ -118,31 +121,66 @@ public class addmacro1 extends javax.swing.JFrame {
             panel.setBackground(new Color(0,0,0,122));
 
             frame.setVisible(true);
+            
+            if (!selectIndexType) {
+                panel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clickPoint = new HashMap<>();
+                        // x, y 지점 HashMap에 담기
+                        clickPoint.put("clickX", e.getX());
+                        clickPoint.put("clickY", e.getY());
 
-            panel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    clickPoint = new HashMap<>();
+                        // indexNumber 넣는부분 
+                        if (arrayList.size() == 0) {
+                            taskList = new MacroAction(1, "click", clickPoint, true);
+                            //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
+                            model.addRow(new Object[]{1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
+                        } else if (arrayList.size() > 0) {
+                            taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
+                            model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
+                        }
+                        arrayList.add(taskList);
 
-                    // x, y 지점 HashMap에 담기
-                    clickPoint.put("clickX", e.getX());
-                    clickPoint.put("clickY", e.getY());
-
-                    // indexNumber 넣는부분 
-                    if (arrayList.size() == 0) {
-                        taskList = new MacroAction(1, "click", clickPoint, true);
-                        //이후 이부분에서 delete Row 문제가 생길 가능성 농후함
-                        model.addRow(new Object[]{1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
-                    } else if (arrayList.size() > 0) {
+                        //******종료하는 친구다.******
+                        frame.dispose();
+                    }
+                });
+            } else if (selectIndexType) {
+                
+                System.out.println("test2323");
+                
+                
+                
+                panel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clickPoint = new HashMap<>();
+                        // x, y 지점 HashMap에 담기
+                        clickPoint.put("clickX", e.getX());
+                        clickPoint.put("clickY", e.getY());
+                        System.out.println(jTable1.getSelectedRow());
+                        if(jTable1.getSelectedRow() != -1){
+                            // 여기서 기존에 있던 ArrayList 및 모델들 index +1 해줘야함
+                            for (int i = jTable1.getSelectedRow() ; i < model.getRowCount() ; i++) {
+                                //model.setValueAt(e, i, NORMAL);
+                                arrayList.get(i).setIndexNumber(arrayList.get(i).getIndexNumber()+1);
+                                model.setValueAt(i+1, i, 0);
+                            }
+                        }
+                        
+                        // indexNumber 넣는부분 
                         taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
                         model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
+                        
+                        arrayList.add(taskList);
+                        
+                        //******종료하는 친구다.******
+                        frame.dispose();
                     }
-                    arrayList.add(taskList);
-                    
-                    //******종료하는 친구다.******
-                    frame.dispose();
-                }
-            });
+                });
+                this.selectIndexType  = false; 
+            }
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -330,6 +368,11 @@ public class addmacro1 extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        jDialog4 = new javax.swing.JDialog();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         button1 = new java.awt.Button();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -339,6 +382,7 @@ public class addmacro1 extends javax.swing.JFrame {
         button5 = new java.awt.Button();
         button6 = new java.awt.Button();
         button7 = new java.awt.Button();
+        button8 = new java.awt.Button();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -447,7 +491,6 @@ public class addmacro1 extends javax.swing.JFrame {
         );
 
         jDialog2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jDialog2.setLocationByPlatform(true);
         jDialog2.setMinimumSize(new java.awt.Dimension(464, 329));
 
         jLabel2.setText("key1");
@@ -667,6 +710,69 @@ public class addmacro1 extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jDialog4.setMinimumSize(new java.awt.Dimension(400, 300));
+
+        jButton6.setText("클릭지점 만들기");
+        jButton6.setActionCommand("addMouseClickPointT2");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        jButton7.setText("Delay 만들기");
+        jButton7.setActionCommand("addDelayT2");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        jButton8.setText("혼합키 만들기");
+        jButton8.setActionCommand("addMixKeyBoaredPointT2");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        jButton9.setText("키보드 액션 만들기");
+        jButton9.setActionCommand("addKeyBoaredPointT2");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog4Layout = new javax.swing.GroupLayout(jDialog4.getContentPane());
+        jDialog4.getContentPane().setLayout(jDialog4Layout);
+        jDialog4Layout.setHorizontalGroup(
+            jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog4Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton8)
+                    .addComponent(jButton6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7)
+                    .addComponent(jButton9))
+                .addGap(47, 47, 47))
+        );
+        jDialog4Layout.setVerticalGroup(
+            jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog4Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton9))
+                .addGap(26, 26, 26)
+                .addGroup(jDialog4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton8)
+                    .addComponent(jButton7))
+                .addContainerGap(161, Short.MAX_VALUE))
+        );
+
         button1.setActionCommand("addMouseClickPoint");
         button1.setLabel("클릭지점 만들기");
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -729,6 +835,14 @@ public class addmacro1 extends javax.swing.JFrame {
             }
         });
 
+        button8.setActionCommand("addEventPoint");
+        button8.setLabel("button8");
+        button8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clickButton(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -736,17 +850,22 @@ public class addmacro1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(button6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(button8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(166, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -767,7 +886,9 @@ public class addmacro1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(button8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -778,16 +899,38 @@ public class addmacro1 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void addEventPoint(){
+        try {
+            jDialog4.setVisible(true);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    
     private void clickButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clickButton
         Index deleteTest = new Index();
-        if (evt.getActionCommand().equals("addMouseClickPoint")) {   //마우스 클릭 포인트
+        if (evt.getActionCommand().equals("addEventPoint")){
+            addEventPoint();
+        } else if (evt.getActionCommand().equals("addMouseClickPoint")) {   //마우스 클릭 포인트
+            getMousePoint();
+        } else if (evt.getActionCommand().equals("addMouseClickPointT2")) {   //중간 기능 삽입 마우스 클릭 포인트 아니 근데 이게 맞냐 ??? 무너가 이상한데????
+            this.selectIndexType = true;
             getMousePoint();
         } else if (evt.getActionCommand().equals("addKeyBoaredPoint")) {    //키보드 클릭 포인트
             getKeyBoardPoint();
+        } else if (evt.getActionCommand().equals("addKeyBoaredPointT2")) {    //키보드 클릭 포인트
+            this.selectIndexType = true;
+            getKeyBoardPoint();
         } else if (evt.getActionCommand().equals("addMixKeyBoaredPoint")){  //키보드 믹스 클릭 포인트
             getMixKeyBoardDialog();
+        } else if (evt.getActionCommand().equals("addMixKeyBoaredPointT2")){  //키보드 믹스 클릭 포인트
+            this.selectIndexType = true;
+            getMixKeyBoardDialog();
         } else if (evt.getActionCommand().equals("addDelay")) {
+            getDelayDialog();
+        } else if (evt.getActionCommand().equals("addDelayT2")) {
+            this.selectIndexType = true;
             getDelayDialog();
         } else if (evt.getActionCommand().equals("putKey1")){   //혼합키1번 설정버튼
             getMixKeyBoardPoint(evt.getActionCommand());
@@ -855,15 +998,21 @@ public class addmacro1 extends javax.swing.JFrame {
     private java.awt.Button button5;
     private java.awt.Button button6;
     private java.awt.Button button7;
+    private java.awt.Button button8;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
+    private javax.swing.JDialog jDialog4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
