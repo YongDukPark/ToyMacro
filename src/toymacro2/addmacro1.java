@@ -149,9 +149,6 @@ public class addmacro1 extends javax.swing.JFrame {
             } else if (selectIndexType) {
                 
                 System.out.println("test2323");
-                
-                
-                
                 panel.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -172,7 +169,12 @@ public class addmacro1 extends javax.swing.JFrame {
                         // indexNumber 넣는부분 
                         taskList = new MacroAction(arrayList.get(arrayList.size()-1).getIndexNumber()+1, "click", clickPoint, true);
                         model.addRow(new Object[]{arrayList.get(arrayList.size()-1).getIndexNumber()+1, taskList.getActionType(), taskList.getActionValue().get("clickX") + " ," + taskList.getActionValue().get("clickY"), taskList.isAction()});
-                        
+                        //model.moveRow(ABORT, WIDTH, WIDTH);
+                        //위 method 이용하여 진행 1매게변수 부터 2매게변수까지 값을 3매게변수 지점부터 시작
+                        //row를 먼저 추가한다음 move를 시키고
+                        //model.setValueAt(e, ERROR, NORMAL);
+                        //그후 위 method를 이용하여 기존에 값들을 교체한다.
+                        //이는 ArrayList에도 동일하게 작업해한다.
                         arrayList.add(taskList);
                         
                         //******종료하는 친구다.******
