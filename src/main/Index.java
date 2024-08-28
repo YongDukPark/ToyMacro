@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Main;
+package main;
 
-import Bean.MacroAction;
-import MACROACTIONTHREAD.AutoMouseActionThread;
-import MACROACTIONTHREAD.MacroActionThread;
+import controlmacro.Addmacro;
+import bean.MacroAction;
+import macroactionthread.AutoMouseActionThread;
+import macroactionthread.MacroActionThread;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,7 +26,6 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import toymacro2.*;
 
 /**
  *
@@ -261,7 +261,7 @@ public class Index extends javax.swing.JFrame {
     
     private void buttonClickEvent(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClickEvent
         if(evt.getActionCommand().equals("Add")){   //실행창 띄우기
-            addmacro1.getInstance(arrayList);
+            Addmacro.getInstance(arrayList);
         } else if (evt.getActionCommand().equals("macroAction")){   //매크로 액션
             //화면 시작지점 만들기
             startStandBy();
@@ -341,6 +341,7 @@ public class Index extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_buttonClickEvent
+    
     private void startStandBy(){
         try {
             JPanel panel = new JPanel() {
