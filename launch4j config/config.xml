@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\JavaProject\ToyMacro\dist\ToyMacro.jar</jar>
+  <outfile>C:\JavaProject\ToyMacro\dist\ToyMacro.exe</outfile>
+  <errTitle>Plese install java first</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon></icon>
+  <singleInstance>
+    <mutexName>ToyMacro</mutexName>
+    <windowTitle>ToyMacro</windowTitle>
+  </singleInstance>
+  <jre>
+    <path>C:\Program Files\Java\jre1.8.0_351</path>
+    <requiresJdk>false</requiresJdk>
+    <requires64Bit>false</requires64Bit>
+    <minVersion>1.8.0</minVersion>
+    <maxVersion></maxVersion>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>1.0.0.0</txtFileVersion>
+    <fileDescription>ToyMacro</fileDescription>
+    <copyright>TM</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>1.0.0.0</txtProductVersion>
+    <productName>ToyMacro</productName>
+    <companyName>PYCOMPANY</companyName>
+    <internalName>ToyMacro</internalName>
+    <originalFilename>ToyMacro.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>

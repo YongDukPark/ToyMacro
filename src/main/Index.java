@@ -72,7 +72,7 @@ public class Index extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("한컴 고딕", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("PMacro");
+        jLabel1.setText("ToyMacro");
 
         jButton1.setText("매크로만들기");
         jButton1.setActionCommand("Add");

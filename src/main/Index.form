@@ -151,7 +151,7 @@
           <Font name="&#xd55c;&#xcef4; &#xace0;&#xb515;" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="PMacro"/>
+        <Property name="text" type="java.lang.String" value="ToyMacro"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
