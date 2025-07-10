@@ -378,7 +378,6 @@ public class Addmacro extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         button2 = new java.awt.Button();
-        button3 = new java.awt.Button();
         button4 = new java.awt.Button();
         button5 = new java.awt.Button();
         button6 = new java.awt.Button();
@@ -387,7 +386,8 @@ public class Addmacro extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jDialog1.setMinimumSize(new java.awt.Dimension(650, 400));
+        jDialog1.setTitle("키보드 액션");
+        jDialog1.setMinimumSize(new java.awt.Dimension(400, 380));
 
         jLabel1.setFont(new java.awt.Font("굴림", 0, 36)); // NOI18N
         jLabel1.setText("키보드 입력값");
@@ -491,6 +491,7 @@ public class Addmacro extends javax.swing.JFrame {
         );
 
         jDialog2.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog2.setTitle("혼합 키");
         jDialog2.setMinimumSize(new java.awt.Dimension(464, 329));
 
         jLabel2.setText("key1");
@@ -591,7 +592,7 @@ public class Addmacro extends javax.swing.JFrame {
         jDialog2Layout.setVerticalGroup(
             jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog2Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
+                .addGap(23, 23, 23)
                 .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDialog2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -611,7 +612,7 @@ public class Addmacro extends javax.swing.JFrame {
                         .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(settingMixText3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addGroup(jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel9)
@@ -632,7 +633,8 @@ public class Addmacro extends javax.swing.JFrame {
         );
 
         jDialog3.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jDialog3.setMinimumSize(new java.awt.Dimension(400, 300));
+        jDialog3.setTitle("Delay");
+        jDialog3.setMinimumSize(new java.awt.Dimension(400, 400));
 
         jLabel4.setText("딜레이 생성");
 
@@ -772,6 +774,8 @@ public class Addmacro extends javax.swing.JFrame {
                 .addContainerGap(161, Short.MAX_VALUE))
         );
 
+        setTitle("매크로 설정");
+
         button1.setActionCommand("addMouseClickPoint");
         button1.setLabel("클릭지점 만들기");
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -798,9 +802,6 @@ public class Addmacro extends javax.swing.JFrame {
                 clickButton(evt);
             }
         });
-
-        button3.setActionCommand("active");
-        button3.setLabel("적용");
 
         button4.setActionCommand("actionSave");
         button4.setLabel("저장");
@@ -850,9 +851,8 @@ public class Addmacro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(button7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -870,13 +870,11 @@ public class Addmacro extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         button1.getAccessibleContext().setAccessibleName("addMouseClickPoint");
@@ -928,8 +926,6 @@ public class Addmacro extends javax.swing.JFrame {
             saveDelayRow();
         } else if (evt.getActionCommand().equals("deleteRow")) {    //Row삭제
             deleteRow();
-        } else if (evt.getActionCommand().equals("active")){    //적용
-            //setActionList();
         } else if (evt.getActionCommand().equals("actionSave")) {   //저장
             if(deleteRow.size() > 0){
                 //Index.class 에 ArrayList row 삭제하기
@@ -977,7 +973,6 @@ public class Addmacro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Button button2;
-    private java.awt.Button button3;
     private java.awt.Button button4;
     private java.awt.Button button5;
     private java.awt.Button button6;

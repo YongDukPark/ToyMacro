@@ -41,6 +41,12 @@ public class MacroActionThread  implements Runnable{
             
             Robot r = new Robot();
             
+            try {
+                Thread.sleep(1000); // 1초 대기
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
             //매크로 실행되는 구간
             while (isRunning) {
                 if(arrayList.get(cnt).getActionType().equals("click")){
@@ -70,11 +76,11 @@ public class MacroActionThread  implements Runnable{
                 } else {
                     r.delay(actionDelay);
                 }
-                try {
-                    Thread.sleep(1000); // 1초 대기
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(1000); // 1초 대기
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 cnt++;
                 if(cnt >= arrayList.size()){
                     break;

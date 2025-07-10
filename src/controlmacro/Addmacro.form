@@ -20,8 +20,9 @@
     <Container class="javax.swing.JDialog" name="jDialog1">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="title" type="java.lang.String" value="&#xd0a4;&#xbcf4;&#xb4dc; &#xc561;&#xc158;"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[650, 400]"/>
+          <Dimension value="[400, 380]"/>
         </Property>
       </Properties>
 
@@ -187,6 +188,7 @@
     <Container class="javax.swing.JDialog" name="jDialog2">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="title" type="java.lang.String" value="&#xd63c;&#xd569; &#xd0a4;"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[464, 329]"/>
         </Property>
@@ -257,7 +259,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -281,7 +283,7 @@
                               <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="settingMixText3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="45" max="32767" attributes="0"/>
+                          <EmptySpace pref="41" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -405,8 +407,9 @@
     <Container class="javax.swing.JDialog" name="jDialog3">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
+        <Property name="title" type="java.lang.String" value="Delay"/>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[400, 300]"/>
+          <Dimension value="[400, 400]"/>
         </Property>
       </Properties>
 
@@ -607,6 +610,9 @@
       </SubComponents>
     </Container>
   </NonVisualComponents>
+  <Properties>
+    <Property name="title" type="java.lang.String" value="&#xb9e4;&#xd06c;&#xb85c; &#xc124;&#xc815;"/>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
@@ -639,10 +645,9 @@
                       <Component id="button5" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="button7" min="-2" max="-2" attributes="0"/>
-                  <Component id="button3" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="button4" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="166" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -663,8 +668,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="button2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="button3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="button4" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -672,7 +675,7 @@
                       <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="155" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -721,12 +724,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clickButton"/>
       </Events>
-    </Component>
-    <Component class="java.awt.Button" name="button3">
-      <Properties>
-        <Property name="actionCommand" type="java.lang.String" value="active"/>
-        <Property name="label" type="java.lang.String" value="&#xc801;&#xc6a9;"/>
-      </Properties>
     </Component>
     <Component class="java.awt.Button" name="button4">
       <Properties>

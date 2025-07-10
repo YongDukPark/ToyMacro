@@ -23,6 +23,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,7 +36,6 @@ public class Index extends javax.swing.JFrame {
     
     HashMap<Object, Object> mouseClickPoint = new HashMap<>();
     ArrayList<MacroAction> arrayList = new ArrayList<>();
-    
     KeyboardFocusManager manager;
     KeyEventDispatcher dispatcher;
     
@@ -69,8 +69,9 @@ public class Index extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ToyMacro");
 
-        jLabel1.setFont(new java.awt.Font("한컴 고딕", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("한컴 고딕", 1, 30)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ToyMacro");
 
@@ -92,9 +93,9 @@ public class Index extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("강제 종료는 ctrl + F9 입니다.");
+        jLabel2.setText("오토마우스 강제종료는 esc 입니다.");
 
-        jLabel3.setText("마우스를 사용할경우 화면배율을 100%로 설정해주세요.");
+        jLabel3.setText("※마우스 클릭을 사용할경우 화면배율을 100%로 설정해주세요.");
 
         jTextField1.setText("500");
 
@@ -163,41 +164,41 @@ public class Index extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(23, 23, 23))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11)))
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(macroRadio)
                             .addComponent(autoMouseRadio))
-                        .addGap(8, 8, 8)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel8))
+                                .addGap(8, 8, 8)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jCheckBox1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(149, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8)
                             .addComponent(jLabel9))
-                        .addGap(0, 89, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,18 +216,18 @@ public class Index extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(autoMouseRadio))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(macroRadio)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel5)
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel6)))
+                        .addComponent(macroRadio)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(6, 6, 6)
+                .addComponent(jLabel5)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addGap(5, 5, 5)
                 .addComponent(jLabel7)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,15 +235,14 @@ public class Index extends javax.swing.JFrame {
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4))
                             .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
                 .addContainerGap())
         );
 
@@ -268,23 +268,26 @@ public class Index extends javax.swing.JFrame {
             setSize(0,0);
 //            System.out.println(getSize());
             
-            addWindowFocusListener(new WindowFocusListener() {
-                @Override
-                public void windowGainedFocus(WindowEvent e) {
-                    // 포커스를 다시 요청
-                    requestFocus();
-                    setVisible(true);
-                }
-
-                @Override
-                public void windowLostFocus(WindowEvent e) {
-                    // 포커스를 다시 요청
-                    requestFocus();
-                    setVisible(true);
-                }
-            });
+            
             try {
                 if (autoMouseRadio.isSelected()) {
+                    
+                    addWindowFocusListener(new WindowFocusListener() {
+                        @Override
+                        public void windowGainedFocus(WindowEvent e) {
+                            // 포커스를 다시 요청
+                            requestFocus();
+                            setVisible(true);
+                        }
+
+                        @Override
+                        public void windowLostFocus(WindowEvent e) {
+                            // 포커스를 다시 요청
+                            requestFocus();
+                            setVisible(true);
+                        }
+                    });
+                    
                     
                     //쓰레드 객체 생성 및 실행부분
                     AutoMouseActionThread bInstance = new AutoMouseActionThread(Integer.parseInt(jTextField2.getText()), Integer.parseInt(jTextField1.getText()), jCheckBox1.isSelected());
@@ -337,6 +340,7 @@ public class Index extends javax.swing.JFrame {
             } catch (Exception e) {
                 System.err.println(e);
             } finally {
+                setSize(428, 353);
                 setVisible(true);
             }
         }
